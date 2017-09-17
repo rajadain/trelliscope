@@ -1,0 +1,49 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: #FAFAFA;
+    font-family: 'Helvetica Neue', arial, sans-serif;
+    font-weight: 400;
+    color: #444;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+main {
+    width: 100%;
+}
+
+#app {
+    height: 100%;
+    background: url('/assets/shifaaz-shamoon-302656.jpg') center/cover;
+}
+
+#home {
+    justify-content: center;
+}
+
+#layer-card {
+    margin: 100px 20px;
+}
+
+#layer-card .mdl-card__title-text {
+    color: #fff;
+    font-size: 300%;
+    letter-spacing: -2px;
+    text-shadow: 0 0 1px #000, 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+#layer-card .mdl-card__title {
+    height: 215px;
+    background: #1A237E;
+}
+
+#layer-card .mdl-card__actions {
+    text-align: right;
+}
