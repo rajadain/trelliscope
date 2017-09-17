@@ -4,6 +4,7 @@ import { Layout } from 'preact-mdl';
 
 import Header from './header';
 import Login from '../routes/login';
+import Main from '../routes/main';
 import Profile from '../routes/profile';
 import Redirect from './redirect';
 // import Home from 'async!./home';
@@ -27,6 +28,7 @@ export default class App extends Component {
                 <Layout.Content>
                     <Router onChange={this.handleRoute}>
                         <Login path="/login/" />
+                        <Main path="/main/" />
                         <Profile path="/profile/" user="me" />
                         <Profile path="/profile/:user" />
                         <Redirect path="/" to="/login/" />
