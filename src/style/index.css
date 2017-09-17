@@ -70,6 +70,13 @@ main {
     right: 8px;
 }
 
-.layer-card + .layer-card {
-    margin: 16px 0;
+.layers-list {
+    margin: 8px 0;
+    display: inline-block;
+    height: calc(100vh - 56px - 121px - 24px - 56px);
+    overflow-y: scroll;
+}
+
+.layers-list > .layer-card + .layer-card {
+    margin: 8px 0;
 }
