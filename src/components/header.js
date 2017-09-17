@@ -9,7 +9,7 @@ export default class Header extends Component {
                     <Layout.Title>Trelliscope</Layout.Title>
                     <Layout.Spacer />
                     <Navigation>
-                        <Navigation.Link href="/">Home</Navigation.Link>
+                        <Navigation.Link href="/login">Login</Navigation.Link>
                         <Navigation.Link href="/profile">Profile</Navigation.Link>
                         <Navigation.Link href="/profile/john">John</Navigation.Link>
                     </Navigation>

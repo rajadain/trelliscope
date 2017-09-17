@@ -1,10 +1,10 @@
 import { h, Component } from 'preact';
 import { Button, Card, Icon, TextField } from 'preact-mdl';
 
-export default class LayerCard extends Component {
+export default class CredentialCard extends Component {
     render() {
         return (
-            <Card shadow={4} id="layer-card">
+            <Card shadow={4} id="credential-card">
                 <Card.Title>
                     <Card.TitleText>
                         Credentials
