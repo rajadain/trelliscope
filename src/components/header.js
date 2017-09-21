@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import { Layout, Navigation } from 'preact-mdl';
+import { Link } from 'react-router-dom';
 
 export default class Header extends Component {
     render() {
@@ -9,9 +10,9 @@ export default class Header extends Component {
                     <Layout.Title>Trelliscope</Layout.Title>
                     <Layout.Spacer />
                     <Navigation>
-                        <Navigation.Link href="/login">Login</Navigation.Link>
-                        <Navigation.Link href="/profile">Profile</Navigation.Link>
-                        <Navigation.Link href="/profile/john">John</Navigation.Link>
+                        <Link to="/login">Login</Link>
+                        <Link to="/profile">Profile</Link>
+                        <Link to="/profile/john">John</Link>
                     </Navigation>
                 </Layout.HeaderRow>
             </Layout.Header>
