@@ -2,9 +2,9 @@ import { h, Component } from 'preact';
 import { Button, Card, Icon } from 'preact-mdl';
 
 export default class _Card extends Component {
-    render({ title, icon, className }) {
+    render({ title, onClear, icon, className }) {
         return (
-            <Card shadow={4} class="card layer">
+            <Card shadow={4} class={`card ${className}`}>
                 <Card.Title>
                     <Card.TitleText>
                         {title}
@@ -17,7 +17,7 @@ export default class _Card extends Component {
                     <Button><Icon icon="file download" /></Button>
                 </Card.Actions>
                 <Card.Menu>
-                    <Button><Icon icon="close" /></Button>
+                    <Button onClick={onClear}><Icon icon="close" /></Button>
                 </Card.Menu>
             </Card>
         );

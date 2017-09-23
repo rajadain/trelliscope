@@ -11,3 +11,23 @@ export function setCredentials(awsAccessKeyId, awsSecretAccessKey) {
         },
     };
 }
+
+export function uploadShape(title, geojson) {
+    return {
+        type: 'UPLOAD_SHAPE',
+        payload: {
+            title,
+            geojson,
+        },
+    };
+}
+
+export function clearShape() {
+    return {
+        type: 'CLEAR_SHAPE',
+        payload: {
+            title: 'Shape',
+            geojson: null,
+        },
+    };
+}

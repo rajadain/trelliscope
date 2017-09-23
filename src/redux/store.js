@@ -4,14 +4,13 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 
-import { login, main } from './reducers';
+import reducers from './reducers';
 
 export const history = createHistory();
 
 export const store = createStore(
     combineReducers({
-        login,
-        main,
+        ...reducers,
         router: routerReducer,
     }),
     applyMiddleware(

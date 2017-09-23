@@ -2,6 +2,25 @@ import { h, Component } from 'preact';
 import { Button, Card, Icon } from 'preact-mdl';
 
 export default class AddShape extends Component {
+    handleUploadShape({ target: { files }}) {
+        const fr = new FileReader();
+        let title = "Shape";
+
+        fr.onload = ({ target: { result }}) => {
+            this.props.onUpload(title, JSON.parse(result));
+        };
+
+        title = files.item(0).name
+                .replace('.geojson', '')
+                .replace('.json', '')
+                .replace('.txt', '');
+        fr.readAsText(files.item(0));
+    }
+
+    triggerUploadShape() {
+        this.uploadFileInput.click();
+    }
+
     render() {
         return (
             <Card shadow={4} class="card shape">
@@ -13,7 +32,13 @@ export default class AddShape extends Component {
                 </Card.Title>
                 <Card.Menu>
                     <Button><Icon icon="edit" /></Button>
-                    <Button><Icon icon="file upload" /></Button>
+                    <Button onClick={this.triggerUploadShape.bind(this)}>
+                        <Icon icon="file upload" />
+                    </Button>
+                    <input type="file"
+                           style="display:none"
+                           onChange={this.handleUploadShape.bind(this)}
+                           ref={(r) => this.uploadFileInput = r} />
                 </Card.Menu>
             </Card>
         );

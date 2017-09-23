@@ -4,16 +4,25 @@ import { connect } from 'preact-redux';
 
 import { AddLayer, AddShape, Layer, Shape } from '../../components/cards';
 
+import { uploadShape, clearShape } from '../../redux/actions';
+import { bindActions } from '../../redux/utils';
+
 class Main extends Component {
-    render({ polygon, layers }) {
-        const polygonRegion = polygon.shape ?
-            <Shape title={polygon.title} />:
-            <AddShape />;
+    onUploadShape(title, geojson) {
+        this.props.uploadShape(title, geojson);
+    }
+
+    render({ shape, layers, clearShape }) {
+        const shapeRegion = shape.geojson ?
+            <Shape title={shape.title}
+                   onClear={clearShape}
+            /> :
+            <AddShape onUpload={this.onUploadShape.bind(this)} />;
 
         return (
             <div id="main" class="mdl-grid">
                 <div class="mdl-cell mdl-cell--3-col">
-                    {polygonRegion}
+                    {shapeRegion}
                     <div class="layers-list">
                         <AddLayer />
                     </div>
@@ -25,6 +34,11 @@ class Main extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({ ...state.main });
+const mapStateToProps = (state) => ({
+    shape: state.shape,
+    layers: state.layers,
+});
 
-export default connect(mapStateToProps)(Main);
+const mapDispatchToProps = bindActions({ uploadShape, clearShape });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

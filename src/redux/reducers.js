@@ -3,18 +3,16 @@ const initial = {
         awsAccessKeyId: null,
         awsSecretAccessKey: null,
     },
-    main: {
-        polygon: {
-            title: 'Shape',
-            shape: null,      // GeoJSON
-            color: '#FFEE58',
-            hidden: false,
-        },
-        layers: [],
-    }
+    shape: {
+        title: 'Shape',
+        geojson: null,
+        color: '#FFEE58',
+        hidden: false,
+    },
+    layers: [],
 };
 
-export function login(state = initial.login, { type, payload }) {
+function login(state = initial.login, { type, payload }) {
     switch(type) {
         case 'SET_CREDENTIALS':
             return Object.assign({}, state, payload);
@@ -23,9 +21,21 @@ export function login(state = initial.login, { type, payload }) {
     }
 }
 
-export function main(state = initial.main, { type, payload }) {
+function shape(state = initial.shape, { type, payload }) {
+    switch(type) {
+        case 'CLEAR_SHAPE':
+        case 'UPLOAD_SHAPE':
+            return Object.assign({}, state, payload);
+        default:
+            return state;
+    }
+}
+
+function layers(state = initial.layers, { type, payload }) {
     switch(type) {
         default:
             return state;
     }
 }
+
+export default { login, shape, layers };
