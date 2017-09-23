@@ -52,20 +52,28 @@ main {
     margin-top: 56px;
 }
 
-.layer-card {
+.card {
     min-height: 0;
 }
 
-.layer-card .mdl-card__title-text {
+.card.shape {
+    background: #FFEE58;
+}
+
+.card.layer {
+    background: #CE93D8;
+}
+
+.card .mdl-card__title-text {
     font-size: 200%;
     letter-spacing: -2px;
 }
 
-.layer-card .mdl-card__actions {
+.card .mdl-card__actions {
     text-align: right;
 }
 
-.layer-card .mdl-card__menu {
+.card .mdl-card__menu {
     top: 16px;
     right: 8px;
 }
@@ -77,6 +85,6 @@ main {
     overflow-y: scroll;
 }
 
-.layers-list > .layer-card + .layer-card {
+.layers-list > .card + .card {
     margin: 8px 0;
 }

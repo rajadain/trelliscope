@@ -4,7 +4,12 @@ const initial = {
         awsSecretAccessKey: null,
     },
     main: {
-        polygon: null,
+        polygon: {
+            title: 'Shape',
+            shape: null,      // GeoJSON
+            color: '#FFEE58',
+            hidden: false,
+        },
         layers: [],
     }
 };

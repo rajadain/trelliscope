@@ -1,16 +1,21 @@
 import { h, Component } from 'preact';
 import { List } from 'preact-mdl';
-import AddCard from '../../components/addCard';
-import LayerCard from '../../components/layerCard';
+import { connect } from 'preact-redux';
 
-export default class Main extends Component {
-    render() {
+import { AddLayer, AddShape, Layer, Shape } from '../../components/cards';
+
+class Main extends Component {
+    render({ polygon, layers }) {
+        const polygonRegion = polygon.shape ?
+            <Shape title={polygon.title} />:
+            <AddShape />;
+
         return (
             <div id="main" class="mdl-grid">
                 <div class="mdl-cell mdl-cell--3-col">
-                    <AddCard type="polygon" />
+                    {polygonRegion}
                     <div class="layers-list">
-                        <AddCard type="layer" />
+                        <AddLayer />
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--9-col">
@@ -19,3 +24,7 @@ export default class Main extends Component {
         );
     }
 }
+
+const mapStateToProps = (state) => ({ ...state.main });
+
+export default connect(mapStateToProps)(Main);

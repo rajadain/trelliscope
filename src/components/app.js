@@ -4,7 +4,8 @@ import { Layout } from 'preact-mdl';
 import { Router, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'preact-redux';
 
-import Header from './header';
+import Header from './Header';
+
 import Login from '../routes/login';
 import Main from '../routes/main';
 import Profile from '../routes/profile';

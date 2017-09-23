@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Button, Card, Icon, TextField } from 'preact-mdl';
 
-export default class CredentialCard extends Component {
+export default class CredentialForm extends Component {
     onSubmit = (e) => {
         e.preventDefault();
         this.props.onSubmit(this.state);

@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
-import CredentialCard from '../../components/credentialCard';
 import { connect } from 'preact-redux';
+
+import CredentialForm from '../../components/CredentialForm';
 
 import { setCredentials, navigateTo } from '../../redux/actions';
 import { bindActions } from '../../redux/utils';
@@ -15,7 +16,7 @@ class Login extends Component {
         return (
             <div id="login" class="mdl-grid">
                 <div class="mdl-cell mdl-cell--4-col">
-                    <CredentialCard onSubmit={this.onLogin.bind(this)} />
+                    <CredentialForm onSubmit={this.onLogin.bind(this)} />
                 </div>
             </div>
         );

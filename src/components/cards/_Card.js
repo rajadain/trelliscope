@@ -1,17 +1,10 @@
 import { h, Component } from 'preact';
-import { Button, Card, Icon, TextField } from 'preact-mdl';
+import { Button, Card, Icon } from 'preact-mdl';
 
-export default class LayerCard extends Component {
-    render() {
-        const type = this.props.type || 'layer';
-        const color = type === 'polygon' ? '#FFEE58' : '#CE93D8';
-        const icon = type === 'polygon' ? 'terrain' : 'layers';
-        const title = type === 'polygon' ? 'Shape' : 'Layer';
-
-        const style = {backgroundColor: color};
-
+export default class _Card extends Component {
+    render({ title, icon, className }) {
         return (
-            <Card shadow={4} class="layer-card" style={style}>
+            <Card shadow={4} class="card layer">
                 <Card.Title>
                     <Card.TitleText>
                         {title}
