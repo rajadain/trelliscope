@@ -31,3 +31,10 @@ export function clearShape() {
         },
     };
 }
+
+export function toggleShapeVisibility() {
+    return {
+        type: 'TOGGLE_SHAPE_VISIBILITY',
+        payload: {},
+    };
+}

@@ -2,9 +2,10 @@ import { h, Component } from 'preact';
 import Card from './_Card';
 
 export default class Layer extends Component {
-    render({ title, onClear }) {
+    render({ params, onClear, onVisibilityToggle }) {
         return (
-            <Card title={title} onClear={onClear}
+            <Card params={params} onClear={onClear}
+                  onVisibilityToggle={onVisibilityToggle}
                   icon="layers" className="layer" />
         );
     }

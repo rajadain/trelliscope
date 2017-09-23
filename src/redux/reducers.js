@@ -26,6 +26,8 @@ function shape(state = initial.shape, { type, payload }) {
         case 'CLEAR_SHAPE':
         case 'UPLOAD_SHAPE':
             return Object.assign({}, state, payload);
+        case 'TOGGLE_SHAPE_VISIBILITY':
+            return Object.assign({}, state, { hidden: !state.hidden });
         default:
             return state;
     }
