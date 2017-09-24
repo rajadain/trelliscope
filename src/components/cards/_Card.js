@@ -25,15 +25,14 @@ export default class _Card extends Component {
            { showDrawer }) {
         const style = {backgroundColor: params.color};
         const colorButtons = cardColors.map(c => {
-            const style = {color: c};
-            const activeClass = c === params.color ? "active" : "";
-            const onClick = () => { onSetColor(c); };
+            const active = c === params.color;
 
             return (
-                <Button onClick={onClick}>
+                <Button disabled={active}
+                        onClick={() => { onSetColor(c); }}>
                     <Icon icon="lens"
-                          class={activeClass}
-                          style={style} />
+                          class={active ? "active" : ""}
+                          style={{color: c}} />
                 </Button>
             );
         });
