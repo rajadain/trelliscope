@@ -3,6 +3,7 @@ import { List } from 'preact-mdl';
 import { connect } from 'preact-redux';
 
 import { AddLayer, AddShape, Layer, Shape } from '../../components/cards';
+import Map from '../../components/Map';
 
 import {
     clearShape,
@@ -36,6 +37,7 @@ class Main extends Component {
                     </div>
                 </div>
                 <div class="mdl-cell mdl-cell--9-col">
+                    <Map shape={shape} layers={layers} />
                 </div>
             </div>
         );
