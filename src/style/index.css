@@ -78,6 +78,38 @@ main {
     right: 8px;
 }
 
+.card .mdl-button {
+    min-width: 62px;
+}
+
+.card .drawer {
+    text-align: right;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    padding: 0 8px;
+    max-height: 0;
+    opacity: 0;
+    width: 100%;
+}
+
+.card .drawer.visible {
+    padding: 8px;
+    max-height: 54px;
+    opacity: 1;
+}
+
+.card .drawer i {
+    text-shadow: #666 0 2px 4px;
+    /* text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000; */
+}
+
+.card .drawer i.active {
+    text-shadow: #000 0 2px 4px;
+}
+
 .layers-list {
     margin: 8px 0;
     display: inline-block;

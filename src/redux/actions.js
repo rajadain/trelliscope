@@ -38,3 +38,12 @@ export function toggleShapeVisibility() {
         payload: {},
     };
 }
+
+export function setShapeColor(color) {
+    return {
+        type: 'SET_SHAPE_COLOR',
+        payload: {
+            color,
+        },
+    };
+}

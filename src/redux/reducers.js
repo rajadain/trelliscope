@@ -25,6 +25,7 @@ function shape(state = initial.shape, { type, payload }) {
     switch(type) {
         case 'CLEAR_SHAPE':
         case 'UPLOAD_SHAPE':
+        case 'SET_SHAPE_COLOR':
             return Object.assign({}, state, payload);
         case 'TOGGLE_SHAPE_VISIBILITY':
             return Object.assign({}, state, { hidden: !state.hidden });

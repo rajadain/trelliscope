@@ -4,18 +4,28 @@ import { connect } from 'preact-redux';
 
 import { AddLayer, AddShape, Layer, Shape } from '../../components/cards';
 
-import { uploadShape, clearShape, toggleShapeVisibility } from '../../redux/actions';
+import {
+    clearShape,
+    uploadShape,
+    setShapeColor,
+    toggleShapeVisibility
+} from '../../redux/actions';
 import { bindActions } from '../../redux/utils';
 
 class Main extends Component {
     render({ shape, layers,
-             uploadShape, clearShape, toggleShapeVisibility }) {
+             clearShape,
+             uploadShape,
+             setShapeColor,
+             toggleShapeVisibility,
+            }) {
         const shapeRegion = shape.geojson ?
             <Shape params={shape}
                    onClear={clearShape}
+                   onSetColor={setShapeColor}
                    onVisibilityToggle={toggleShapeVisibility}
             /> :
-            <AddShape onUpload={uploadShape} />;
+            <AddShape color={shape.color} onUpload={uploadShape} />;
 
         return (
             <div id="main" class="mdl-grid">
@@ -37,6 +47,11 @@ const mapStateToProps = (state) => ({
     layers: state.layers,
 });
 
-const mapDispatchToProps = bindActions({ uploadShape, clearShape, toggleShapeVisibility });
+const mapDispatchToProps = bindActions({
+    clearShape,
+    uploadShape,
+    setShapeColor,
+    toggleShapeVisibility,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

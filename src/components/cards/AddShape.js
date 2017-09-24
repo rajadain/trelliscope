@@ -3,6 +3,10 @@ import { Button, Card, Icon } from 'preact-mdl';
 
 export default class AddShape extends Component {
     handleUploadShape({ target: { files }}) {
+        if (!files || files.length === 0 || files.item(0).name === '') {
+            return false;
+        }
+
         const fr = new FileReader();
         let title = "Shape";
 
@@ -15,15 +19,17 @@ export default class AddShape extends Component {
                 .replace('.json', '')
                 .replace('.txt', '');
         fr.readAsText(files.item(0));
+
+        this.uploadFileInput.value = null;
     }
 
     triggerUploadShape() {
         this.uploadFileInput.click();
     }
 
-    render() {
+    render({ color }) {
         return (
-            <Card shadow={4} class="card shape">
+            <Card shadow={4} class="card shape" style={{backgroundColor: color}}>
                 <Card.Title>
                     <Card.TitleText>
                         Shape
