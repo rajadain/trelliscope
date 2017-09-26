@@ -20,14 +20,14 @@ export default class App extends Component {
                     <div id="app">
                         <Layout fixed-header>
                             <Header />
+                            <Layout.Content>
+                                <Route path="/login/" component={Login} />
+                                <Route path="/main/" component={Main} />
+                                <Route exact path="/" render={() => (
+                                    <Redirect to="/login/" />
+                                )} />
+                            </Layout.Content>
                         </Layout>
-                        <Layout.Content>
-                            <Route path="/login/" component={Login} />
-                            <Route path="/main/" component={Main} />
-                            <Route exact path="/" render={() => (
-                                <Redirect to="/login/" />
-                            )} />
-                        </Layout.Content>
                     </div>
                 </Router>
             </Provider>

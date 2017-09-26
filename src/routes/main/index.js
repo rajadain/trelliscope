@@ -30,7 +30,7 @@ class Main extends Component {
 
         return (
             <div id="main" class="mdl-grid">
-                <div class="mdl-cell mdl-cell--3-col">
+                <div class="mdl-cell mdl-cell--3-col left">
                     {shapeRegion}
                     <div class="layers-list">
                         <AddLayer />
