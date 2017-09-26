@@ -7,7 +7,8 @@ export default class Map extends Component {
     shouldComponentUpdate = () => false;
 
     componentDidMount() {
-        const map = L.map('map').setView([39.9526, -75.1652], 8);
+        const map = L.map('map', { zoomControl: false })
+                     .setView([39.9526, -75.1652], 8);
 
         L.tileLayer(
             `https://api.mapbox.com/v4/mapbox.light/{z}/{x}/{y}@2x.png32?access_token=${token}`

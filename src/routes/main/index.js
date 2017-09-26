@@ -29,15 +29,13 @@ class Main extends Component {
             <AddShape color={shape.color} onUpload={uploadShape} />;
 
         return (
-            <div id="main" class="mdl-grid">
-                <div class="mdl-cell mdl-cell--3-col left">
+            <div id="main">
+                <Map shape={shape} layers={layers} />
+                <div class="controls">
                     {shapeRegion}
                     <div class="layers-list">
                         <AddLayer />
                     </div>
-                </div>
-                <div class="mdl-cell mdl-cell--9-col">
-                    <Map shape={shape} layers={layers} />
                 </div>
             </div>
         );

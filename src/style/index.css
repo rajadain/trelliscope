@@ -51,16 +51,20 @@ main {
 
 #main {
     background: #D1D1D1;
-    height: calc(100vh - 64px);
-    overflow: hidden;
 }
 
-#main > .mdl-cell.left {
+#main .controls {
+    position: absolute;
+    top: 16px; left: 16px;
     overflow: scroll;
+    z-index: 20;
+    max-height: calc(100vh - 64px - 32px);
 }
 
 #map {
-    height: 100%;
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    z-index: 10;
 }
 
 .card {
