@@ -21,12 +21,39 @@ export default class Map extends Component {
         this.shapeLayer = shapeLayer;
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.shape.title !== nextProps.shape.title) {
-            this.shapeLayer.clearLayers();
-            if (nextProps.shape.geojson) {
-                this.shapeLayer.addLayer(new L.GeoJSON(nextProps.shape.geojson));
+    componentWillReceiveProps({ shape, layers }) {
+        const { map, props, shapeLayer } = this;
+
+        // Handle new shape
+        if (props.shape.title !== shape.title) {
+            shapeLayer.clearLayers();
+            if (shape.geojson) {
+                const geojsonLayer = new L.GeoJSON(shape.geojson, {
+                    style: {
+                        fillColor: shape.color,
+                        color: shape.color,
+                    },
+                });
+
+                shapeLayer.addLayer(geojsonLayer);
+                map.flyToBounds(geojsonLayer);
             }
+        }
+
+        // Handle shape color change
+        if (props.shape.color !== shape.color) {
+            shapeLayer.setStyle({
+                fillColor: shape.color,
+                color: shape.color,
+            });
+        }
+
+        // Handle opacity change
+        if (props.shape.hidden !== shape.hidden) {
+            shapeLayer.setStyle({
+                fillOpacity: shape.hidden ? 0 : 0.2,
+                opacity: shape.hidden ? 0 : 1,
+            });
         }
     }
 
