@@ -21,11 +21,12 @@ main {
 
 #app {
     height: 100%;
-    background: url('/assets/shifaaz-shamoon-302656.jpg') center/cover;
 }
 
 #login {
     justify-content: center;
+    height: calc(100vh - 64px);
+    background: url('/assets/shifaaz-shamoon-302656.jpg') center/cover;
 }
 
 #credential-card {
@@ -49,6 +50,7 @@ main {
 }
 
 #main {
+    background: #D1D1D1;
     height: calc(100vh - 64px);
     overflow: hidden;
 }
