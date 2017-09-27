@@ -2,12 +2,13 @@ import { push } from 'react-router-redux';
 
 export { push as navigateTo };
 
-export function setCredentials(awsAccessKeyId, awsSecretAccessKey) {
+export function setCredentials(awsAccessKeyId, awsSecretAccessKey, bucketName) {
     return {
         type: 'SET_CREDENTIALS',
         payload: {
             awsAccessKeyId,
             awsSecretAccessKey,
+            bucketName,
         },
     };
 }

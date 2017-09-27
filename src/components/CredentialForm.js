@@ -15,7 +15,11 @@ export default class CredentialForm extends Component {
         this.setState({ awsSecretAccessKey: e.target.value });
     };
 
-    render(_, { awsAccessKeyId, awsSecretAccessKey }) {
+    updateBucketName = (e) => {
+        this.setState({ bucketName: e.target.value });
+    }
+
+    render(_, { awsAccessKeyId, awsSecretAccessKey, bucketName }) {
         return (
             <form onSubmit={this.onSubmit.bind(this)}>
                 <Card shadow={4} id="credential-card">
@@ -38,6 +42,11 @@ export default class CredentialForm extends Component {
                             floating-label
                             label="AWS_SECRET_ACCESS_KEY"
                             type="password" />
+                        <TextField
+                            onChange={this.updateBucketName}
+                            value={bucketName}
+                            floating-label
+                            label="Bucket Name" />
                     </Card.Text>
                     <Card.Actions>
                         <Button raised accent type="submit">Go</Button>

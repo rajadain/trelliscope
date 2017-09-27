@@ -2,6 +2,7 @@ const initial = {
     login: {
         awsAccessKeyId: null,
         awsSecretAccessKey: null,
+        bucketName: null,
     },
     shape: {
         title: 'Shape',

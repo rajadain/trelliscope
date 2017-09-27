@@ -7,9 +7,11 @@ import { setCredentials, navigateTo } from '../../redux/actions';
 import { bindActions } from '../../redux/utils';
 
 class Login extends Component {
-    onLogin({awsAccessKeyId, awsSecretAccessKey}) {
-        this.props.setCredentials(awsAccessKeyId, awsSecretAccessKey);
-        this.props.navigateTo('/main/');
+    onLogin({awsAccessKeyId, awsSecretAccessKey, bucketName}) {
+        const { setCredentials, navigateTo } = this.props;
+
+        setCredentials(awsAccessKeyId, awsSecretAccessKey, bucketName);
+        navigateTo('/main/');
     }
 
     render() {
