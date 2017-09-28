@@ -1,0 +1,10 @@
+version: '3'
+services:
+  app:
+    image: node:8.6.0-alpine
+    working_dir: /usr/src
+    ports:
+      - "7315:7315"
+    volumes:
+      - ./app:/usr/src
+    command: yarn run start

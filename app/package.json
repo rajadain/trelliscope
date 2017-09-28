@@ -7,8 +7,8 @@
     "test": "eslint src && preact test",
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build": "preact build",
-    "serve": "preact build && preact serve",
-    "dev": "preact watch"
+    "serve": "preact build && preact serve -p 7315",
+    "dev": "preact watch -p 7315"
   },
   "keywords": [],
   "author": "",
@@ -27,7 +27,6 @@
     "material-design-icons": "^3.0.1",
     "material-design-lite": "^1.3.0",
     "preact": "^8.2.5",
-    "preact-compat": "^3.17.0",
     "preact-mdl": "^2.2.1",
     "preact-redux": "^2.0.2",
     "react-router-dom": "^4.2.2",
