@@ -1,10 +1,18 @@
 version: '3'
 services:
+  api:
+    image: openjdk:8u141-jdk
+    working_dir: /opt/app
+    ports:
+      - "7316:7316"
+    volumes:
+      - ./api:/opt/app
+    command: ./sbt ~reStart
   app:
     image: node:8.6.0-alpine
-    working_dir: /usr/src
+    working_dir: /opt/app
     ports:
       - "7315:7315"
     volumes:
-      - ./app:/usr/src
+      - ./app:/opt/app
     command: yarn run start
