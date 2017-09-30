@@ -24,9 +24,10 @@ then
             run --rm --no-deps app \
             yarn
 
-        # Build containers.
+        # Compile API
         docker-compose \
             -f docker-compose.yml \
-            build
+            run --rm --no-deps api \
+            ./sbt -ivy /opt/app/.ivy2 compile
     fi
 fi
