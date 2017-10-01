@@ -3,6 +3,15 @@ package in.rajada.trelliscope
 import akka.http.scaladsl.server.{ HttpApp, Route }
 import akka.http.scaladsl.unmarshalling.Unmarshaller._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+
+import geotrellis.proj4.{ LatLng, ConusAlbers }
+import geotrellis.spark.{ LayerId, SpatialKey, TileLayerMetadata }
+import geotrellis.spark.io._
+import geotrellis.spark.io.s3.S3CollectionLayerReader
+import geotrellis.raster.Tile
+import geotrellis.vector.{ GeometryCollection, MultiPolygon }
+import geotrellis.vector.io._
+
 import spray.json._
 
 import com.typesafe.config.ConfigFactory
@@ -35,7 +44,7 @@ object WebServer extends HttpApp with App {
         complete("pong")
       }
     } ~
-    path("/layers") {
+    path("layers") {
       pathEndOrSingleSlash {
         post {
           entity(as[ListLayersRequest]) { req =>
@@ -43,6 +52,38 @@ object WebServer extends HttpApp with App {
             val layers = store.layerIds.map { x => x.name }
 
             complete(layers)
+          }
+        }
+      }
+    } ~
+    path("query") {
+      pathEndOrSingleSlash {
+        post {
+          entity(as[GetLayerRequest]) { req =>
+            val store = S3AttributeStore(req.awsAccessKeyId, req.awsSecretAccessKey, req.bucket)
+            val layerId = LayerId(req.layer, 0)
+            val reader = S3CollectionLayerReader(store)
+            val shape = req.shape.parseJson.convertTo[MultiPolygon]
+                                           .reproject(LatLng, ConusAlbers)
+                                           .buffer(0)
+                                           .asMultiPolygon
+                                           .get
+
+            val layer = reader.query[SpatialKey, Tile, TileLayerMetadata[SpatialKey]](layerId)
+                              .where(Intersects(shape))
+                              .result
+
+            val keys = layer.map(_._1)
+            val meta = layer.metadata
+            val density = meta.mapTransform.apply(keys.head).width / 100
+
+            val tiles = keys.map(meta.mapTransform.apply)
+                            .map(_.toPolygon.densify(density)
+                                            .reproject(meta.crs, LatLng))
+
+            val result = GeometryCollection(tiles).toGeoJson
+
+            complete(result)
           }
         }
       }

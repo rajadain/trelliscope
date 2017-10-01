@@ -42,6 +42,6 @@ lazy val dependencies = Seq(
 )
 
 lazy val root =
-    Project("root", file("."))
+    project.in(file("."))
         .settings(settings:_*)
         .settings({ libraryDependencies ++= dependencies })
