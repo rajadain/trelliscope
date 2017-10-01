@@ -67,6 +67,10 @@ main {
     z-index: 10;
 }
 
+.mdl-layout__header {
+    background-color: #01579B;
+}
+
 .card {
     min-height: 0;
 }

@@ -2,6 +2,11 @@ import { h, Component } from 'preact';
 import L from 'leaflet';
 
 const token = "pk.eyJ1IjoicmFqYWRhaW4iLCJhIjoiY2o3eTh4NG5sMWVqejJxczZmZDhpbmJudyJ9.Osu0iffc0R9I2ML4BBNCvw";
+const styles = {
+    lightGrey: 'v4/mapbox.light/{z}/{x}/{y}@2x.png32',
+    frozenYogurt: 'styles/v1/rajadain/cj880p6ol41le2rma2jih3hpm/tiles/256/{z}/{x}/{y}@2x',
+    iceCream: 'styles/v1/rajadain/cj881j7o6410o2snu8ah0e0y4/tiles/256/{z}/{x}/{y}@2x'
+}
 
 export default class Map extends Component {
     shouldComponentUpdate = () => false;
@@ -11,7 +16,7 @@ export default class Map extends Component {
                      .setView([39.9526, -75.1652], 8);
 
         L.tileLayer(
-            `https://api.mapbox.com/v4/mapbox.light/{z}/{x}/{y}@2x.png32?access_token=${token}`
+            `https://api.mapbox.com/${styles.frozenYogurt}?access_token=${token}`
         ).addTo(map);
 
         const shapeLayer = new L.FeatureGroup();
