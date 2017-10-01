@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import L from 'leaflet';
+import 'leaflet-draw';
 
 const token = "pk.eyJ1IjoicmFqYWRhaW4iLCJhIjoiY2o3eTh4NG5sMWVqejJxczZmZDhpbmJudyJ9.Osu0iffc0R9I2ML4BBNCvw";
 const styles = {
@@ -10,6 +11,12 @@ const styles = {
 
 export default class Map extends Component {
     shouldComponentUpdate = () => false;
+
+    constructor(props) {
+        super(props);
+
+        this.onDrawFinish = props.onDrawFinish;
+    }
 
     componentDidMount() {
         const map = L.map('map', { zoomControl: false })
@@ -23,12 +30,23 @@ export default class Map extends Component {
 
         map.addLayer(shapeLayer);
 
+        const drawTool = new L.Draw.Polygon(map);
+
+        map.on(L.Draw.Event.CREATED, ({ layer }) => {
+            this.onDrawFinish(layer.toGeoJSON());
+        });
+
+        map.on(L.Draw.Event.DRAWSTOP, () => {
+            drawTool.disable();
+        });
+
         this.map = map;
         this.shapeLayer = shapeLayer;
+        this.drawTool = drawTool;
     }
 
     componentWillReceiveProps({ shape, layers }) {
-        const { map, props, shapeLayer } = this;
+        const { map, props, shapeLayer, drawTool } = this;
 
         // Handle new shape
         if (props.shape.title !== shape.title) {
@@ -60,6 +78,23 @@ export default class Map extends Component {
                 fillOpacity: shape.hidden ? 0 : 0.2,
                 opacity: shape.hidden ? 0 : 1,
             });
+        }
+
+        // Handle drawing
+        if (shape.draw) {
+            drawTool.setOptions({
+                allowIntersection: false,
+                shapeOptions: {
+                    fillColor: shape.color,
+                    fillOpacity: 0.2,
+                    color: shape.color,
+                    opacity: 1,
+                },
+            });
+
+            drawTool.enable();
+        } else {
+            drawTool.disable();
         }
     }
 

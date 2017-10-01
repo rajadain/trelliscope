@@ -9,6 +9,7 @@ const initial = {
         geojson: null,
         color: '#FFEE58',
         hidden: false,
+        draw: false,
     },
     layers: [],
 };
@@ -27,6 +28,9 @@ function shape(state = initial.shape, { type, payload }) {
         case 'CLEAR_SHAPE':
         case 'UPLOAD_SHAPE':
         case 'SET_SHAPE_COLOR':
+        case 'START_DRAWING':
+        case 'CANCEL_DRAWING':
+        case 'FINISH_DRAWING':
             return Object.assign({}, state, payload);
         case 'TOGGLE_SHAPE_VISIBILITY':
             return Object.assign({}, state, { hidden: !state.hidden });

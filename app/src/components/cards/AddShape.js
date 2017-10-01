@@ -27,7 +27,7 @@ export default class AddShape extends Component {
         this.uploadFileInput.click();
     }
 
-    render({ color }) {
+    render({ color, isDrawing, onDrawStart, onDrawCancel }) {
         return (
             <Card shadow={4} class="card shape" style={{backgroundColor: color}}>
                 <Card.Title>
@@ -37,7 +37,15 @@ export default class AddShape extends Component {
                     </Card.TitleText>
                 </Card.Title>
                 <Card.Menu>
-                    <Button><Icon icon="edit" /></Button>
+                    { isDrawing ? (
+                        <Button onClick={onDrawCancel}>
+                            <Icon icon="close" />
+                        </Button>
+                    ) : (
+                        <Button onClick={onDrawStart}>
+                            <Icon icon="edit" />
+                        </Button>
+                    )}
                     <Button onClick={this.triggerUploadShape.bind(this)}>
                         <Icon icon="file upload" />
                     </Button>
