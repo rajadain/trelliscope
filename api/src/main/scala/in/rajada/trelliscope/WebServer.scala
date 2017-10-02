@@ -49,7 +49,9 @@ object WebServer extends HttpApp with App {
         post {
           entity(as[ListLayersRequest]) { req =>
             val store = S3AttributeStore(req.awsAccessKeyId, req.awsSecretAccessKey, req.bucket)
-            val layers = store.layerIds.map { x => x.name }
+            val layers = store.layerIds
+                              .filter { _.zoom == 0 }
+                              .map { _.name }
 
             complete(layers)
           }
