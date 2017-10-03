@@ -5,6 +5,7 @@ import sbt._
 object Dependencies {
     val akka            = "com.typesafe.akka"           %% "akka-actor"           % Version.akka
     val akkaHttp        = "com.typesafe.akka"           %% "akka-http"            % Version.akkaHttp
+    val akkaHttpCors    = "ch.megard"                   %% "akka-http-cors"       % Version.akkaHttpCors
     val akkaSprayJson   = "com.typesafe.akka"           %% "akka-http-spray-json" % Version.akkaHttp
     val akkaStream      = "com.typesafe.akka"           %% "akka-stream"          % Version.akka
     val geotrellisSpark = "org.locationtech.geotrellis" %% "geotrellis-spark"     % Version.geotrellis

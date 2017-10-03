@@ -33,6 +33,7 @@ lazy val settings = Seq(
 lazy val dependencies = Seq(
     Dependencies.akka,
     Dependencies.akkaHttp,
+    Dependencies.akkaHttpCors,
     Dependencies.akkaSprayJson,
     Dependencies.akkaStream,
     Dependencies.geotrellisSpark,

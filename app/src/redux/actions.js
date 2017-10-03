@@ -80,3 +80,34 @@ export function setShapeColor(color) {
         },
     };
 }
+
+export function startFetchLayers() {
+    return {
+        type: 'START_FETCH_LAYERS',
+        payload: {
+            fetching: true,
+            error: false,
+        },
+    };
+}
+
+export function finishFetchLayers(data) {
+    return {
+        type: 'FINISH_FETCH_LAYERS',
+        payload: {
+            fetching: false,
+            error: false,
+            data,
+        },
+    };
+}
+
+export function errorFetchLayers() {
+    return {
+        type: 'ERROR_FETCH_LAYERS',
+        payload: {
+            fetching: false,
+            error: true,
+        },
+    };
+}

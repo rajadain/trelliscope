@@ -12,6 +12,11 @@ const initial = {
         draw: false,
     },
     layers: [],
+    layerNames: {
+        fetching: false,
+        error: false,
+        data: [],
+    },
 };
 
 function login(state = initial.login, { type, payload }) {
@@ -46,4 +51,15 @@ function layers(state = initial.layers, { type, payload }) {
     }
 }
 
-export default { login, shape, layers };
+function layerNames(state = initial.layerNames, { type, payload }) {
+    switch(type) {
+        case 'START_FETCH_LAYERS':
+        case 'FINISH_FETCH_LAYERS':
+        case 'ERROR_FETCH_LAYERS':
+            return Object.assign({}, state, payload);
+        default:
+            return state;
+    }
+}
+
+export default { login, shape, layers, layerNames };

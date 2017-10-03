@@ -4,6 +4,8 @@ import akka.http.scaladsl.server.{ HttpApp, Route }
 import akka.http.scaladsl.unmarshalling.Unmarshaller._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 
+import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
+
 import geotrellis.proj4.{ LatLng, ConusAlbers }
 import geotrellis.spark.{ LayerId, SpatialKey, TileLayerMetadata }
 import geotrellis.spark.io._
@@ -38,7 +40,7 @@ object PostRequestProtocol extends DefaultJsonProtocol {
 object WebServer extends HttpApp with App {
   import PostRequestProtocol._
 
-  def routes: Route =
+  def routes: Route = cors() {
     path("ping") {
       get {
         complete("pong")
@@ -90,6 +92,7 @@ object WebServer extends HttpApp with App {
         }
       }
     }
+  }
 
   val config = ConfigFactory.load()
   val port = config.getInt("trelliscope.port")
