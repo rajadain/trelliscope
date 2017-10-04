@@ -1,7 +1,11 @@
 import { h, Component } from 'preact';
-import { Button, Card, Icon } from 'preact-mdl';
+import { Button, Card, Icon, Menu } from 'preact-mdl';
 
 export default class AddLayer extends Component {
+    toggleDrawer() {
+        document.getElementsByClassName('mdl-layout')[0].MaterialLayout.toggleDrawer();
+    }
+
     render() {
         return (
             <Card shadow={4} class="card layer">
@@ -12,7 +16,9 @@ export default class AddLayer extends Component {
                     </Card.TitleText>
                 </Card.Title>
                 <Card.Menu>
-                    <Button><Icon icon="library add" /></Button>
+                    <Button onClick={this.toggleDrawer}>
+                        <Icon icon="library add" />
+                    </Button>
                 </Card.Menu>
             </Card>
         );

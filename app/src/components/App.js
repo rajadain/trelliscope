@@ -8,6 +8,7 @@ import Header from './Header';
 
 import Login from '../routes/login';
 import Main from '../routes/main';
+import Drawer from '../routes/main/drawer';
 import Profile from '../routes/profile';
 
 import { history, store } from '../redux/store';
@@ -29,6 +30,7 @@ export default class App extends Component {
                         <Route path="/main/" render={() => (
                             <Layout fixed-header>
                                 <Header />
+                                <Drawer />
                                 <Layout.Content>
                                     <Main />
                                 </Layout.Content>

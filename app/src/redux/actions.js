@@ -91,13 +91,13 @@ export function startFetchLayers() {
     };
 }
 
-export function finishFetchLayers(data) {
+export function finishFetchLayers(names) {
     return {
         type: 'FINISH_FETCH_LAYERS',
         payload: {
             fetching: false,
             error: false,
-            data,
+            data: names.map(n => ({ name: n, active: false })),
         },
     };
 }
