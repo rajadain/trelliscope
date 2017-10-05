@@ -111,3 +111,47 @@ export function errorFetchLayers() {
         },
     };
 }
+
+export function startQueryLayer(index) {
+    return {
+        type: 'START_QUERY_LAYER',
+        payload: {
+            fetching: true,
+            error: false,
+            index,
+        },
+    };
+}
+
+export function finishQueryLayer(index, name, geojson) {
+    return {
+        type: 'FINISH_QUERY_LAYER',
+        payload: {
+            fetching: false,
+            error: false,
+            index,
+            name,
+            geojson
+        },
+    };
+}
+
+export function errorQueryLayer(index) {
+    return {
+        type: 'ERROR_QUERY_LAYER',
+        payload: {
+            fetching: false,
+            error: true,
+            index,
+        },
+    };
+}
+
+export function removeQueryLayer(index) {
+    return {
+        type: 'REMOVE_QUERY_LAYER',
+        payload: {
+            index,
+        },
+    };
+}

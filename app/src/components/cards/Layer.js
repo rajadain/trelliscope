@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import Card from './_Card';
 
 const cardColors = [
-    '#e57373',
+    '#E57373',
     '#BA68C8',
     '#4FC3F7',
     '#81C784',

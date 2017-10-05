@@ -11,7 +11,11 @@ const initial = {
         hidden: false,
         draw: false,
     },
-    layers: [],
+    layers: {
+        fetching: false,
+        error: false,
+        data: [],
+    },
     layerNames: {
         fetching: false,
         error: false,
@@ -45,18 +49,62 @@ function shape(state = initial.shape, { type, payload }) {
 }
 
 function layers(state = initial.layers, { type, payload }) {
+    let data, layer;
     switch(type) {
+        case 'START_QUERY_LAYER':
+        case 'ERROR_QUERY_LAYER':
+            return Object.assign({}, state, payload);
+        case 'FINISH_QUERY_LAYER':
+            layer = {
+                title: payload.name,
+                geojson: payload.geojson,
+                color: '#E57373',
+                hidden: false,
+            };
+
+            data = state.data.slice();
+            data.splice(data.length, 0, layer);
+
+            return Object.assign({}, state,
+                                 { fetching: false, error: false, data });
+        case 'REMOVE_QUERY_LAYER':
+            data = state.data.filter((item, index) => {
+                return index !== payload.index;
+            });
+
+            return Object.assign({}, state, { data });
         default:
             return state;
     }
 }
 
 function layerNames(state = initial.layerNames, { type, payload }) {
+    let data;
     switch(type) {
         case 'START_FETCH_LAYERS':
         case 'FINISH_FETCH_LAYERS':
         case 'ERROR_FETCH_LAYERS':
             return Object.assign({}, state, payload);
+        case 'FINISH_QUERY_LAYER':
+            data = state.data.map((item, index) => {
+                if (index === payload.index) {
+                    return { name: item.name, active: true };
+                }
+
+                return item;
+            });
+
+            return Object.assign({}, state, { data });
+        case 'REMOVE_QUERY_LAYER':
+            data = state.data.map((item, index) => {
+                if (index === payload.index) {
+                    return { name: item.name, active: false };
+                }
+
+                return item;
+            });
+
+            return Object.assign({}, state, { data });
         default:
             return state;
     }

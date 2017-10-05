@@ -2,17 +2,19 @@ import { h, Component } from 'preact';
 import { Layout, Navigation } from 'preact-mdl';
 import { connect } from 'preact-redux';
 
+import LayerEntry from '../../components/LayerEntry';
+
 class Drawer extends Component {
     render({ layerNames: { data }}) {
-        const links = data ? data.filter(d => !d.active).map(d => (
-            <Navigation.Link>
-                {d.name}
-            </Navigation.Link>
-        )) : (
-            <Navigation.Link>
-                No Layers Loaded
-            </Navigation.Link>
-        );
+        const empty = (<Navigation.Link>No Layers Loaded</Navigation.Link>),
+              links = !data ? empty :
+                      data.filter(({ active }) => !active)
+                          .map(({ active, name }, index) => (
+                              <LayerEntry key={index}
+                                          index={index}
+                                          name={name}
+                                          active={active}
+                              />));
 
         return (
             <Layout.Drawer>
