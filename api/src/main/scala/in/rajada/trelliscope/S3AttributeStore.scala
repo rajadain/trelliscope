@@ -1,15 +1,13 @@
 package in.rajada.trelliscope
 
-import com.amazonaws.auth.BasicAWSCredentials
-import geotrellis.spark.io.s3.{ S3AttributeStore => AttributeStore, S3Client, AmazonS3Client}
+import geotrellis.spark.io.s3.{ S3AttributeStore => AttributeStore, S3Client }
 
 class S3AttributeStore(val awsAccessKeyId: String, val awsSecretAccessKey: String,
                        override val bucket: String, override val prefix: String)
   extends AttributeStore(bucket, prefix) {
 
   override val s3Client: S3Client =
-    AmazonS3Client(new BasicAWSCredentials(awsAccessKeyId, awsSecretAccessKey),
-                   S3Client.defaultConfiguration)
+    S3Client.basic(awsAccessKeyId, awsSecretAccessKey)
 }
 
 object S3AttributeStore {

@@ -9,9 +9,8 @@ import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
 import geotrellis.proj4.{ LatLng, ConusAlbers }
 import geotrellis.spark.{ LayerId, SpatialKey, TileLayerMetadata }
 import geotrellis.spark.io._
-import geotrellis.spark.io.s3.S3CollectionLayerReader
 import geotrellis.raster.Tile
-import geotrellis.vector.{ GeometryCollection, MultiPolygon }
+import geotrellis.vector.GeometryCollection
 import geotrellis.vector.io._
 
 import spray.json._
@@ -37,7 +36,7 @@ object PostRequestProtocol extends DefaultJsonProtocol {
   implicit val getLayersFormat = jsonFormat5(GetLayerRequest)
 }
 
-object WebServer extends HttpApp with App {
+object WebServer extends HttpApp with App with Utils {
   import PostRequestProtocol._
 
   def routes: Route = cors() {
@@ -66,12 +65,12 @@ object WebServer extends HttpApp with App {
           entity(as[GetLayerRequest]) { req =>
             val store = S3AttributeStore(req.awsAccessKeyId, req.awsSecretAccessKey, req.bucket)
             val layerId = LayerId(req.layer, 0)
-            val reader = S3CollectionLayerReader(store)
-            val shape = req.shape.parseJson.convertTo[MultiPolygon]
-                                           .reproject(LatLng, ConusAlbers)
-                                           .buffer(0)
-                                           .asMultiPolygon
-                                           .get
+            val reader = S3CollectionLayerReader(req.awsAccessKeyId, req.awsSecretAccessKey, store)
+            val shape = toMultiPolygon(req.shape.parseJson)
+                          .reproject(LatLng, ConusAlbers)
+                          .buffer(0)
+                          .asMultiPolygon
+                          .get
 
             val layer = reader.query[SpatialKey, Tile, TileLayerMetadata[SpatialKey]](layerId)
                               .where(Intersects(shape))
