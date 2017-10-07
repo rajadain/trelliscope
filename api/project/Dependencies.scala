@@ -1,5 +1,3 @@
-import scala.util.Properties
-
 import sbt._
 
 object Dependencies {
@@ -11,5 +9,5 @@ object Dependencies {
     val geotrellisSpark = "org.locationtech.geotrellis" %% "geotrellis-spark"     % Version.geotrellis
     val geotrellisS3    = "org.locationtech.geotrellis" %% "geotrellis-s3"        % Version.geotrellis
     val scalaLogging    = "com.typesafe.scala-logging"  %% "scala-logging"        % Version.scalaLogging
-    val spark           = "org.apache.spark"            %% "spark-core"           % Version.spark % "provided"
+    val spark           = "org.apache.spark"            %% "spark-core"           % Version.spark
 }

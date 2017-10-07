@@ -7,5 +7,5 @@ object Version {
     val hadoop       = "2.7.3"
     val scala        = "2.11.11"
     val scalaLogging = "3.7.2"
-    val spark        = "2.1.0"
+    val spark        = "2.1.1"
 }

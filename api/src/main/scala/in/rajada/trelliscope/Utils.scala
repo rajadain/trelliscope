@@ -3,7 +3,7 @@ package in.rajada.trelliscope
 import geotrellis.vector.{MultiPolygon, Polygon}
 import geotrellis.vector.io._
 
-import spray.json.{JsObject, JsString, JsValue}
+import spray.json.JsValue
 
 trait Utils {
   def toMultiPolygon(json: JsValue): MultiPolygon = GeometryFormat.read(json) match {
