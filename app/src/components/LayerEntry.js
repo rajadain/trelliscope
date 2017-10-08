@@ -7,7 +7,6 @@ import {
     startQueryLayer,
     finishQueryLayer,
     errorQueryLayer,
-    removeQueryLayer,
 } from '../redux/actions';
 import { bindActions } from '../redux/utils';
 
@@ -22,7 +21,6 @@ class LayerEntry extends Component {
             startQueryLayer,
             finishQueryLayer,
             errorQueryLayer,
-            removeQueryLayer,
         } = this.props;
 
         const { awsAccessKeyId, awsSecretAccessKey, bucketName } = login;
@@ -71,7 +69,6 @@ const mapDispatchToProps = bindActions({
     startQueryLayer,
     finishQueryLayer,
     errorQueryLayer,
-    removeQueryLayer,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerEntry);

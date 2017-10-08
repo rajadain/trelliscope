@@ -16,6 +16,7 @@ export default class Map extends Component {
         super(props);
 
         this.onDrawFinish = props.onDrawFinish;
+        this.onLayerAdjustment = props.onLayerAdjustment;
     }
 
     componentDidMount() {
@@ -26,8 +27,10 @@ export default class Map extends Component {
             `https://api.mapbox.com/${styles.frozenYogurt}?access_token=${token}`
         ).addTo(map);
 
+        const tileLayer = new L.FeatureGroup();
         const shapeLayer = new L.FeatureGroup();
 
+        map.addLayer(tileLayer);
         map.addLayer(shapeLayer);
 
         const drawTool = new L.Draw.Polygon(map);
@@ -41,12 +44,14 @@ export default class Map extends Component {
         });
 
         this.map = map;
+        this.tileLayer = tileLayer;
         this.shapeLayer = shapeLayer;
         this.drawTool = drawTool;
+        this.layerCache = [];
     }
 
     componentWillReceiveProps({ shape, layers }) {
-        const { map, props, shapeLayer, drawTool } = this;
+        const { map, props, shapeLayer, tileLayer, drawTool, layerCache } = this;
 
         // Handle new shape
         if (props.shape.title !== shape.title) {
@@ -95,6 +100,42 @@ export default class Map extends Component {
             drawTool.enable();
         } else {
             drawTool.disable();
+        }
+
+        // Handle layer events
+        const { operation, index, data } = layers;
+        let layer, tiles;
+        if (operation && index !== null) {
+            switch(operation) {
+                case 'ADD':
+                    layer = data[index];
+                    tiles = new L.GeoJSON(layer.geojson, {
+                        style: {
+                            fillColor: layer.color,
+                            color: layer.color,
+                        },
+                    });
+
+                    tileLayer.addLayer(tiles);
+                    layerCache.push(tileLayer.getLayerId(tiles));
+                    break;
+                case 'REMOVE':
+                    tiles = layerCache.splice(index, 1);
+                    tileLayer.removeLayer(tiles);
+                    break;
+                case 'UPDATE':
+                    layer = data[index];
+                    tiles = tileLayer.getLayer(layerCache[index]);
+                    tiles.setStyle({
+                        fillColor: layer.color,
+                        fillOpacity: layer.hidden ? 0 : 0.2,
+                        color: layer.color,
+                        opacity: layer.hidden ? 0 : 1,
+                    });
+                    break;
+            }
+
+            this.onLayerAdjustment();
         }
     }
 

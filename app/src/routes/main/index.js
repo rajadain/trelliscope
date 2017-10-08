@@ -16,6 +16,7 @@ import {
     clearLayer,
     setLayerColor,
     toggleLayerVisibility,
+    finishMapAdjustment,
 } from '../../redux/actions';
 import { bindActions } from '../../redux/utils';
 
@@ -31,6 +32,7 @@ class Main extends Component {
              clearLayer,
              setLayerColor,
              toggleLayerVisibility,
+             finishMapAdjustment,
             }) {
         const shapeRegion = shape.geojson ?
             <Shape params={shape}
@@ -55,6 +57,7 @@ class Main extends Component {
             <div id="main">
                 <Map shape={shape} layers={layers}
                      onDrawFinish={finishDrawing}
+                     onLayerAdjustment={finishMapAdjustment}
                 />
                 <div class="controls">
                     {shapeRegion}
@@ -84,6 +87,7 @@ const mapDispatchToProps = bindActions({
     clearLayer,
     setLayerColor,
     toggleLayerVisibility,
+    finishMapAdjustment,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

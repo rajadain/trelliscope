@@ -175,11 +175,9 @@ export function errorQueryLayer(index) {
     };
 }
 
-export function removeQueryLayer(index) {
+export function finishMapAdjustment() {
     return {
-        type: 'REMOVE_QUERY_LAYER',
-        payload: {
-            index,
-        },
+        type: 'FINISH_MAP_ADJUSTMENT',
+        payload: {},
     };
 }

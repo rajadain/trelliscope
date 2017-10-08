@@ -14,6 +14,8 @@ const initial = {
     layers: {
         fetching: false,
         error: false,
+        operation: null,
+        index: null,
         data: [],
     },
     layerNames: {
@@ -66,13 +68,20 @@ function layers(state = initial.layers, { type, payload }) {
             data.splice(data.length, 0, layer);
 
             return Object.assign({}, state,
-                                 { fetching: false, error: false, data });
+                                 { fetching: false,
+                                   error: false,
+                                   operation: 'ADD',
+                                   index: data.length - 1,
+                                   data });
         case 'CLEAR_LAYER':
             data = state.data.filter((item, index) => {
                 return index !== payload.index;
             });
 
-            return Object.assign({}, state, { data });
+            return Object.assign({}, state,
+                                 { operation: 'REMOVE',
+                                   index: payload.index,
+                                   data });
         case 'SET_LAYER_COLOR':
             data = state.data.map((item, index) => {
                 if (index === payload.index) {
@@ -82,7 +91,10 @@ function layers(state = initial.layers, { type, payload }) {
                 return item;
             });
 
-            return Object.assign({}, state, { data });
+            return Object.assign({}, state,
+                                 { operation: 'UPDATE',
+                                   index: payload.index,
+                                   data });
         case 'TOGGLE_LAYER_VISIBILITY':
             data = state.data.map((item, index) => {
                 if (index === payload.index) {
@@ -92,7 +104,12 @@ function layers(state = initial.layers, { type, payload }) {
                 return item;
             });
 
-            return Object.assign({}, state, { data });
+            return Object.assign({}, state,
+                                 { operation: 'UPDATE',
+                                   index: payload.index,
+                                   data });
+        case 'FINISH_MAP_ADJUSTMENT':
+            return Object.assign({}, state, { operation: null, index: null });
         default:
             return state;
     }
@@ -115,7 +132,7 @@ function layerNames(state = initial.layerNames, { type, payload }) {
             });
 
             return Object.assign({}, state, { data });
-        case 'REMOVE_QUERY_LAYER':
+        case 'CLEAR_LAYER':
             data = state.data.map((item, index) => {
                 if (index === payload.index) {
                     return { name: item.name, active: false };
