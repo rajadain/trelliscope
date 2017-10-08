@@ -20,7 +20,7 @@ export default class _Card extends Component {
         document.body.removeChild(a);
     }
 
-    render({ params, onClear, onSetColor, onVisibilityToggle,
+    render({ params, onClear, onSetColor, onVisibilityToggle, index = null,
              icon, className, cardColors },
            { showDrawer }) {
         const style = {backgroundColor: params.color};
@@ -29,7 +29,7 @@ export default class _Card extends Component {
 
             return (
                 <Button disabled={active}
-                        onClick={() => { onSetColor(c); }}>
+                        onClick={() => { onSetColor(c, index); }}>
                     <Icon icon="lens"
                           class={active ? "active" : ""}
                           style={{color: c}} />
@@ -49,7 +49,7 @@ export default class _Card extends Component {
                     <Button onClick={this.toggleDrawer.bind(this)}>
                         <Icon icon="color lens" />
                     </Button>
-                    <Button onClick={onVisibilityToggle}>
+                    <Button onClick={() => onVisibilityToggle(index)}>
                         <Icon icon={`visibility${ params.hidden ? " off" : ""}`} />
                     </Button>
                     <Button onClick={this.downloadShape.bind(this)}>
@@ -57,7 +57,7 @@ export default class _Card extends Component {
                     </Button>
                 </Card.Actions>
                 <Card.Menu>
-                    <Button onClick={onClear}><Icon icon="close" /></Button>
+                    <Button onClick={() => onClear(index)}><Icon icon="close" /></Button>
                 </Card.Menu>
                 <Card.Text class={`drawer${showDrawer ? " visible" : ""}`}>
                     {colorButtons}

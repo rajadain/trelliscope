@@ -10,11 +10,13 @@ const cardColors = [
 ];
 
 export default class Layer extends Component {
-    render({ params, onClear, onVisibilityToggle }) {
+    render({ params, index, onClear, onSetColor, onVisibilityToggle }) {
         return (
             <Card params={params} onClear={onClear}
+                  onSetColor={onSetColor}
                   onVisibilityToggle={onVisibilityToggle}
-                  icon="layers" className="layer"
+                  index={index}
+                  icon="" className="layer"
                   cardColors={cardColors} />
         );
     }

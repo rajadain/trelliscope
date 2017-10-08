@@ -67,9 +67,29 @@ function layers(state = initial.layers, { type, payload }) {
 
             return Object.assign({}, state,
                                  { fetching: false, error: false, data });
-        case 'REMOVE_QUERY_LAYER':
+        case 'CLEAR_LAYER':
             data = state.data.filter((item, index) => {
                 return index !== payload.index;
+            });
+
+            return Object.assign({}, state, { data });
+        case 'SET_LAYER_COLOR':
+            data = state.data.map((item, index) => {
+                if (index === payload.index) {
+                    item.color = payload.color;
+                }
+
+                return item;
+            });
+
+            return Object.assign({}, state, { data });
+        case 'TOGGLE_LAYER_VISIBILITY':
+            data = state.data.map((item, index) => {
+                if (index === payload.index) {
+                    item.hidden = !item.hidden;
+                }
+
+                return item;
             });
 
             return Object.assign({}, state, { data });

@@ -81,6 +81,34 @@ export function setShapeColor(color) {
     };
 }
 
+export function clearLayer(index) {
+    return {
+        type: 'CLEAR_LAYER',
+        payload: {
+            index,
+        },
+    };
+}
+
+export function toggleLayerVisibility(index) {
+    return {
+        type: 'TOGGLE_LAYER_VISIBILITY',
+        payload: {
+            index,
+        },
+    };
+}
+
+export function setLayerColor(color, index) {
+    return {
+        type: 'SET_LAYER_COLOR',
+        payload: {
+            color,
+            index,
+        },
+    };
+}
+
 export function startFetchLayers() {
     return {
         type: 'START_FETCH_LAYERS',

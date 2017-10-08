@@ -9,7 +9,7 @@ const cardColors = [
     '#FFEE58',
 ];
 
-export default class Layer extends Component {
+export default class Shape extends Component {
     render({ params, onClear, onSetColor, onVisibilityToggle }) {
         return (
             <Card params={params} onClear={onClear}

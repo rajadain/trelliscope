@@ -13,6 +13,9 @@ import {
     startDrawing,
     cancelDrawing,
     finishDrawing,
+    clearLayer,
+    setLayerColor,
+    toggleLayerVisibility,
 } from '../../redux/actions';
 import { bindActions } from '../../redux/utils';
 
@@ -25,6 +28,9 @@ class Main extends Component {
              startDrawing,
              cancelDrawing,
              finishDrawing,
+             clearLayer,
+             setLayerColor,
+             toggleLayerVisibility,
             }) {
         const shapeRegion = shape.geojson ?
             <Shape params={shape}
@@ -37,6 +43,13 @@ class Main extends Component {
                       onDrawCancel={cancelDrawing}
                       onUpload={uploadShape}
             />;
+        const layerCards = layers.data.map((layer, index) => (
+                <Layer key={index} index={index} params={layer}
+                       onClear={clearLayer}
+                       onSetColor={setLayerColor}
+                       onVisibilityToggle={toggleLayerVisibility}
+                />
+            ));
 
         return (
             <div id="main">
@@ -47,6 +60,7 @@ class Main extends Component {
                     {shapeRegion}
                     <div class="layers-list">
                         <AddLayer />
+                        {layerCards}
                     </div>
                 </div>
             </div>
@@ -67,6 +81,9 @@ const mapDispatchToProps = bindActions({
     startDrawing,
     cancelDrawing,
     finishDrawing,
+    clearLayer,
+    setLayerColor,
+    toggleLayerVisibility,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
