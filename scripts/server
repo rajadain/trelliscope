@@ -7,8 +7,10 @@ if [[ -n "${TRELLISCOPE_DEBUG}" ]]; then
 fi
 
 function usage() {
-    echo -n "Usage: $(basename "$0")
-Starts servers using docker-compose.
+    echo -n "Usage: $(basename "$0") [--docker]
+Starts servers using sbt and yarn
+
+--docker   Start server inside a Docker container
 "
 }
 
@@ -17,7 +19,12 @@ then
     if [ "${1:-}" = "--help" ]
     then
         usage
-    else
+    elif [ "${1:-}" = "--docker" ]
+    then
         docker-compose -f docker-compose.yml up
+    else
+        (cd api && ./sbt -ivy ./.ivy2 run) &
+        (cd app && yarn run start) &
+        wait
     fi
 fi
