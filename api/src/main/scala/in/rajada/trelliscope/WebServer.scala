@@ -9,7 +9,8 @@ import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
 import geotrellis.proj4.{ LatLng, ConusAlbers }
 import geotrellis.spark.{ LayerId, SpatialKey, TileLayerMetadata }
 import geotrellis.spark.io._
-import geotrellis.raster.Tile
+import geotrellis.spark.io.s3.S3LayerHeader
+import geotrellis.raster.{ RasterExtent, Tile }
 import geotrellis.vector.GeometryCollection
 import geotrellis.vector.io._
 
@@ -72,12 +73,15 @@ object WebServer extends HttpApp with App with Utils {
                           .asMultiPolygon
                           .get
 
+            val attrs = store.readLayerAttributes[S3LayerHeader, TileLayerMetadata[SpatialKey], SpatialKey](layerId)
+            val re = RasterExtent(shape.envelope, attrs.metadata.layout.tileCols, attrs.metadata.layout.tileRows)
+            val layer2 = Intersects(attrs.metadata, attrs.keyIndex.keyBounds, re)
             val layer = reader.query[SpatialKey, Tile, TileLayerMetadata[SpatialKey]](layerId)
                               .where(Intersects(shape))
                               .result
 
-            val keys = layer.map(_._1)
-            val meta = layer.metadata
+            val keys = layer2.value
+            val meta = attrs.metadata
             val density = meta.mapTransform.apply(keys.head).width / 100
 
             val tiles = keys.map(meta.mapTransform.apply)
