@@ -49,6 +49,20 @@ main {
     text-align: right;
 }
 
+#credential-card .mdl-switch {
+    margin-bottom: 20px;
+}
+
+#credential-card .custom-credentials {
+    transition: height 0.3s cubic-bezier(.4,0,.2,1);
+    overflow: hidden;
+    height: 134px;
+}
+
+#credential-card .custom-credentials.closed {
+    height: 0;
+}
+
 #main {
     background: #D1D1D1;
 }

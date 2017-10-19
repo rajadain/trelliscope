@@ -6,6 +6,7 @@ services:
     ports:
       - "7316:7316"
     volumes:
+      - ~/.aws:/root/.aws
       - ./api:/opt/app
     command: ./sbt -ivy /opt/app/.ivy2 ~reStart
   app:
