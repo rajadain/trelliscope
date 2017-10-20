@@ -2,7 +2,7 @@ import { h, Component } from 'preact';
 import { List } from 'preact-mdl';
 import { connect } from 'preact-redux';
 
-import { AddLayer, AddShape, Layer, Shape } from '../../components/cards';
+import { AddShape, Layer, Shape } from '../../components/cards';
 import Map from '../../components/Map';
 
 import {
@@ -62,7 +62,6 @@ class Main extends Component {
                 <div class="controls">
                     {shapeRegion}
                     <div class="layers-list">
-                        <AddLayer />
                         {layerCards}
                     </div>
                 </div>

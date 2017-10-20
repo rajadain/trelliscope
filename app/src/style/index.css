@@ -23,6 +23,15 @@ main {
     height: 100%;
 }
 
+.mdl-layout__drawer-button > i.material-icons {
+    visibility: hidden;
+}
+
+.mdl-layout__drawer-button > i.material-icons::after {
+    content: 'library_add';
+    visibility: visible;
+}
+
 #login {
     justify-content: center;
     height: calc(100vh - 64px);
