@@ -78,13 +78,13 @@ object WebServer extends HttpApp with App with Utils {
 
             val keys = layer.map(_._1)
             val meta = layer.metadata
-            val density = meta.mapTransform.apply(keys.head).width / 100
+            val density = meta.mapTransform.apply(keys.head).width / 10
 
             val tiles = keys.map(meta.mapTransform.apply)
                             .map(_.toPolygon.densify(density)
                                             .reproject(meta.crs, LatLng))
 
-            val result = GeometryCollection(tiles).toGeoJson
+            val result = GeometryCollection(tiles).toJson
 
             complete(result)
           }
