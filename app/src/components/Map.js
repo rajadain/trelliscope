@@ -9,6 +9,26 @@ const styles = {
     iceCream: 'styles/v1/rajadain/cj881j7o6410o2snu8ah0e0y4/tiles/256/{z}/{x}/{y}@2x'
 }
 
+const { protocol, hostname } = document.location;
+const GEOTIFF_BASE = `${protocol}//${hostname}:7316/geotiff`;
+
+const onEachFeature = ({ properties }, tiles) => {
+    const { col, row, layer, bucket } = properties;
+    const url = `${GEOTIFF_BASE}/${bucket}/${layer}/${col}/${row}`;
+    const p = `<p><strong>${layer}</strong></p>`;
+    const a = `<a href="${url}" rel="noopener noreferer" target="_blank">Download GeoTIFF</a>`;
+    // const button = `
+    // <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect"
+    //    href="${url}" rel="noopener noreferer" target="_blank"
+    //    style="background-color: ${color}; color: #000"
+    // >
+    //     <strong>GeoTIFF</strong>
+    // </a>
+    // `
+
+    tiles.bindPopup(`${p}${a}`);
+}
+
 export default class Map extends Component {
     shouldComponentUpdate = () => false;
 
@@ -114,6 +134,7 @@ export default class Map extends Component {
                             fillColor: layer.color,
                             color: layer.color,
                         },
+                        onEachFeature,
                     });
 
                     tileLayer.addLayer(tiles);
