@@ -10,8 +10,8 @@ import geotrellis.proj4.{ LatLng, ConusAlbers }
 import geotrellis.spark.{ LayerId, SpatialKey, TileLayerMetadata }
 import geotrellis.spark.io._
 import geotrellis.raster.Tile
-import geotrellis.vector.GeometryCollection
-import geotrellis.vector.io._
+import geotrellis.vector.PolygonFeature
+import geotrellis.vector.io.json.JsonFeatureCollection
 
 import spray.json._
 
@@ -31,9 +31,17 @@ case class GetLayerRequest (
   awsSecretAccessKey: String
 )
 
+case class TileFeatureData (
+  col: Int,
+  row: Int,
+  layer: String,
+  bucket: String
+)
+
 object PostRequestProtocol extends DefaultJsonProtocol {
   implicit val listLayersFormat = jsonFormat3(ListLayersRequest)
   implicit val getLayersFormat = jsonFormat5(GetLayerRequest)
+  implicit val tileFeatureDataFormat = jsonFormat4(TileFeatureData)
 }
 
 object WebServer extends HttpApp with App with Utils {
@@ -80,11 +88,18 @@ object WebServer extends HttpApp with App with Utils {
             val meta = layer.metadata
             val density = meta.mapTransform.apply(keys.head).width / 10
 
-            val tiles = keys.map(meta.mapTransform.apply)
-                            .map(_.toPolygon.densify(density)
-                                            .reproject(meta.crs, LatLng))
+            val tiles = keys.map(key => {
+              val data = TileFeatureData(key.col, key.row,
+                                         req.layer, req.bucket)
+              val extent = meta.mapTransform.apply(key)
+              val polygon = extent.toPolygon
+                                  .densify(density)
+                                  .reproject(meta.crs, LatLng)
 
-            val result = GeometryCollection(tiles).toJson
+              PolygonFeature[TileFeatureData](polygon, data)
+            })
+
+            val result = JsonFeatureCollection(tiles).toJson
 
             complete(result)
           }
