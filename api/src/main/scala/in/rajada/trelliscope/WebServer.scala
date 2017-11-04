@@ -1,5 +1,6 @@
 package in.rajada.trelliscope
 
+import akka.http.scaladsl.model.{ HttpEntity, HttpResponse, MediaTypes }
 import akka.http.scaladsl.server.{ HttpApp, Route }
 import akka.http.scaladsl.unmarshalling.Unmarshaller._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
@@ -9,7 +10,9 @@ import ch.megard.akka.http.cors.scaladsl.CorsDirectives._
 import geotrellis.proj4.{ LatLng, ConusAlbers }
 import geotrellis.spark.{ LayerId, SpatialKey, TileLayerMetadata }
 import geotrellis.spark.io._
+import geotrellis.spark.io.s3.{ S3LayerHeader, S3ValueReader }
 import geotrellis.raster.Tile
+import geotrellis.raster.io.geotiff.SinglebandGeoTiff
 import geotrellis.vector.PolygonFeature
 import geotrellis.vector.io.json.JsonFeatureCollection
 
@@ -105,6 +108,21 @@ object WebServer extends HttpApp with App with Utils {
           }
         }
       }
+    } ~
+    pathPrefix("geotiff" / Segment / Segment / IntNumber / IntNumber) { (bucket, layer, col, row) =>
+      val store = S3AttributeStore("", "", bucket)
+      val layerId = LayerId(layer, 0)
+      val reader = S3ValueReader[SpatialKey, Tile](store, layerId)
+      val LayerAttributes(_, metadata, _, _) =
+        store.readLayerAttributes[S3LayerHeader, TileLayerMetadata[SpatialKey], SpatialKey](layerId)
+      val key = SpatialKey(col, row)
+      val extent = metadata.mapTransform.apply(key)
+      val tile = reader.read(key)
+      val crs = metadata.crs
+
+      val geotiff = SinglebandGeoTiff(tile, extent, crs)
+
+      complete(HttpResponse(entity = HttpEntity(MediaTypes.`image/tiff`, geotiff.toByteArray)))
     }
   }
 
