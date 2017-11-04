@@ -12,5 +12,9 @@ class S3CollectionLayerReader(val awsAccessKeyId: String, val awsSecretAccessKey
 
 object S3CollectionLayerReader {
   def apply(awsAccessKeyId: String, awsSecretAccessKey: String, store: gtS3AttributeStore) =
-    new S3CollectionLayerReader(awsAccessKeyId, awsSecretAccessKey, store)
+    if (awsAccessKeyId != "" && awsSecretAccessKey != "") {
+      new S3CollectionLayerReader(awsAccessKeyId, awsSecretAccessKey, store)
+    } else {
+      new gtS3CollectionLayerReader(store)
+    }
 }
