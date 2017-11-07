@@ -110,19 +110,21 @@ object WebServer extends HttpApp with App with Utils {
       }
     } ~
     pathPrefix("geotiff" / Segment / Segment / IntNumber / IntNumber) { (bucket, layer, col, row) =>
-      val store = S3AttributeStore("", "", bucket)
-      val layerId = LayerId(layer, 0)
-      val reader = S3ValueReader[SpatialKey, Tile](store, layerId)
-      val LayerAttributes(_, metadata, _, _) =
-        store.readLayerAttributes[S3LayerHeader, TileLayerMetadata[SpatialKey], SpatialKey](layerId)
-      val key = SpatialKey(col, row)
-      val extent = metadata.mapTransform.apply(key)
-      val tile = reader.read(key)
-      val crs = metadata.crs
+      get {
+        val store = S3AttributeStore("", "", bucket)
+        val layerId = LayerId(layer, 0)
+        val reader = S3ValueReader[SpatialKey, Tile](store, layerId)
+        val LayerAttributes(_, metadata, _, _) =
+          store.readLayerAttributes[S3LayerHeader, TileLayerMetadata[SpatialKey], SpatialKey](layerId)
+        val key = SpatialKey(col, row)
+        val extent = metadata.mapTransform.apply(key)
+        val tile = reader.read(key)
+        val crs = metadata.crs
 
-      val geotiff = SinglebandGeoTiff(tile, extent, crs)
+        val geotiff = SinglebandGeoTiff(tile, extent, crs)
 
-      complete(HttpResponse(entity = HttpEntity(MediaTypes.`image/tiff`, geotiff.toByteArray)))
+        complete(HttpResponse(entity = HttpEntity(MediaTypes.`image/tiff`, geotiff.toByteArray)))
+      }
     }
   }
 
