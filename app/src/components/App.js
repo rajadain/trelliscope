@@ -5,10 +5,10 @@ import { Router, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'preact-redux';
 
 import Header from './Header';
+import Drawer from './Drawer';
 
 import Login from '../routes/login';
 import Main from '../routes/main';
-import Drawer from '../routes/main/drawer';
 
 import { history, store } from '../redux/store';
 

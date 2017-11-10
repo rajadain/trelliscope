@@ -160,3 +160,16 @@ main {
 .layers-list > .card + .card {
     margin: 8px 0;
 }
+
+.mdl-layout__drawer {
+    width: 360px;
+    transform: translateX(-360px);
+}
+
+.mdl-navigation__link .mdl-checkbox {
+    height: auto;
+}
+
+.mdl-navigation__link .mdl-checkbox.is-disabled .mdl-checkbox__label {
+    color: #424242;
+}

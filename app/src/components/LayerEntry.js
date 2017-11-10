@@ -56,8 +56,9 @@ class LayerEntry extends Component {
     render({ title, active }) {
         return (
             <Navigation.Link onClick={this.onClick.bind(this)}>
-                <CheckBox checked={active} disabled />
-                {title}
+                <CheckBox checked={active} disabled>
+                    {title}
+                </CheckBox>
             </Navigation.Link>
         );
     }
