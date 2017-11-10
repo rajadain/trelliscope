@@ -57,7 +57,7 @@ export default class _Card extends Component {
                     </Button>
                 </Card.Actions>
                 <Card.Menu>
-                    <Button onClick={() => onClear(index)}><Icon icon="close" /></Button>
+                    <Button onClick={() => onClear(index, params.title)}><Icon icon="close" /></Button>
                 </Card.Menu>
                 <Card.Text class={`drawer${showDrawer ? " visible" : ""}`}>
                     {colorButtons}

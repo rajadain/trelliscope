@@ -51,14 +51,14 @@ function shape(state = initial.shape, { type, payload }) {
 }
 
 function layers(state = initial.layers, { type, payload }) {
-    let data, layer;
+    let data, layer, targetIndex;
     switch(type) {
         case 'START_QUERY_LAYER':
         case 'ERROR_QUERY_LAYER':
             return Object.assign({}, state, payload);
         case 'FINISH_QUERY_LAYER':
             layer = {
-                title: payload.name,
+                title: payload.title,
                 geojson: payload.geojson,
                 color: '#E57373',
                 hidden: false,
@@ -72,6 +72,20 @@ function layers(state = initial.layers, { type, payload }) {
                                    error: false,
                                    operation: 'ADD',
                                    index: data.length - 1,
+                                   data });
+        case 'REMOVE_QUERY_LAYER':
+            data = state.data.filter((item, index) => {
+                if (item.title === payload.title) {
+                    targetIndex = index;
+                    return false;
+                } else {
+                    return true;
+                }
+            });
+
+            return Object.assign({}, state,
+                                 { operation: 'REMOVE',
+                                   index: targetIndex,
                                    data });
         case 'CLEAR_LAYER':
             data = state.data.filter((item, index) => {
@@ -125,7 +139,17 @@ function layerNames(state = initial.layerNames, { type, payload }) {
         case 'FINISH_QUERY_LAYER':
             data = state.data.map((item, index) => {
                 if (index === payload.index) {
-                    return { name: item.name, active: true };
+                    return { title: item.title, active: true };
+                }
+
+                return item;
+            });
+
+            return Object.assign({}, state, { data });
+        case 'REMOVE_QUERY_LAYER':
+            data = state.data.map((item, index) => {
+                if (index === payload.index) {
+                    return { title: item.title, active: false };
                 }
 
                 return item;
@@ -134,8 +158,8 @@ function layerNames(state = initial.layerNames, { type, payload }) {
             return Object.assign({}, state, { data });
         case 'CLEAR_LAYER':
             data = state.data.map((item, index) => {
-                if (index === payload.index) {
-                    return { name: item.name, active: false };
+                if (item.title === payload.title) {
+                    return { title: item.title, active: false };
                 }
 
                 return item;

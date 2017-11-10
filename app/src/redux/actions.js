@@ -81,11 +81,12 @@ export function setShapeColor(color) {
     };
 }
 
-export function clearLayer(index) {
+export function clearLayer(index, title) {
     return {
         type: 'CLEAR_LAYER',
         payload: {
             index,
+            title,
         },
     };
 }
@@ -119,13 +120,13 @@ export function startFetchLayers() {
     };
 }
 
-export function finishFetchLayers(names) {
+export function finishFetchLayers(titles) {
     return {
         type: 'FINISH_FETCH_LAYERS',
         payload: {
             fetching: false,
             error: false,
-            data: names.map(n => ({ name: n, active: false })),
+            data: titles.map(n => ({ title: n, active: false })),
         },
     };
 }
@@ -151,14 +152,14 @@ export function startQueryLayer(index) {
     };
 }
 
-export function finishQueryLayer(index, name, geojson) {
+export function finishQueryLayer(index, title, geojson) {
     return {
         type: 'FINISH_QUERY_LAYER',
         payload: {
             fetching: false,
             error: false,
             index,
-            name,
+            title,
             geojson
         },
     };
@@ -171,6 +172,18 @@ export function errorQueryLayer(index) {
             fetching: false,
             error: true,
             index,
+        },
+    };
+}
+
+export function removeQueryLayer(index, title) {
+    return {
+        type: 'REMOVE_QUERY_LAYER',
+        payload: {
+            fetching: false,
+            error: false,
+            index,
+            title,
         },
     };
 }

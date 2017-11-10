@@ -8,11 +8,10 @@ class Drawer extends Component {
     render({ layerNames: { data }}) {
         const empty = (<Navigation.Link>No Layers Loaded</Navigation.Link>),
               links = !data ? empty :
-                      data.filter(({ active }) => !active)
-                          .map(({ active, name }, index) => (
+                      data.map(({ active, title }, index) => (
                               <LayerEntry key={index}
                                           index={index}
-                                          name={name}
+                                          title={title}
                                           active={active}
                               />));
 

@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { Navigation } from 'preact-mdl';
+import { CheckBox, Navigation } from 'preact-mdl';
 import { connect } from 'preact-redux';
 import axios from 'axios';
 
@@ -7,6 +7,7 @@ import {
     startQueryLayer,
     finishQueryLayer,
     errorQueryLayer,
+    removeQueryLayer,
 } from '../redux/actions';
 import { bindActions } from '../redux/utils';
 
@@ -16,11 +17,12 @@ const LAYERS_QUERY_URL = `${protocol}//${hostname}:7316/query`;
 class LayerEntry extends Component {
     onClick() {
         const {
-            index, name, active,
+            index, title, active,
             login, shape,
             startQueryLayer,
             finishQueryLayer,
             errorQueryLayer,
+            removeQueryLayer,
         } = this.props;
 
         const { awsAccessKeyId, awsSecretAccessKey, bucketName } = login;
@@ -37,24 +39,25 @@ class LayerEntry extends Component {
                     awsAccessKeyId,
                     awsSecretAccessKey,
                     bucket: bucketName,
-                    layer: name,
+                    layer: title,
                     shape: JSON.stringify(geojson),
                 })
                 .then(({ data }) => {
-                    finishQueryLayer(index, name, data);
+                    finishQueryLayer(index, title, data);
                 })
                 .catch(() => {
                     errorQueryLayer(index);
                 });
         } else {
-            removeQueryLayer(index);
+            removeQueryLayer(index, title);
         }
     }
 
-    render({ name }) {
+    render({ title, active }) {
         return (
             <Navigation.Link onClick={this.onClick.bind(this)}>
-                {name}
+                <CheckBox checked={active} disabled />
+                {title}
             </Navigation.Link>
         );
     }
@@ -69,6 +72,7 @@ const mapDispatchToProps = bindActions({
     startQueryLayer,
     finishQueryLayer,
     errorQueryLayer,
+    removeQueryLayer,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayerEntry);

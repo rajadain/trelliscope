@@ -25,8 +25,8 @@ class Main extends Component {
         const { clearShape, clearLayer, layers } = this.props;
 
         clearShape();
-        layers.data.map((_, index) => {
-            clearLayer(index);
+        layers.data.map(({ title }, index) => {
+            clearLayer(index, title);
         });
     }
 
