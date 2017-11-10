@@ -21,8 +21,16 @@ import {
 import { bindActions } from '../../redux/utils';
 
 class Main extends Component {
+    clearShapeAndLayers() {
+        const { clearShape, clearLayer, layers } = this.props;
+
+        clearShape();
+        layers.data.map((_, index) => {
+            clearLayer(index);
+        });
+    }
+
     render({ shape, layers,
-             clearShape,
              uploadShape,
              setShapeColor,
              toggleShapeVisibility,
@@ -36,7 +44,7 @@ class Main extends Component {
             }) {
         const shapeRegion = shape.geojson ?
             <Shape params={shape}
-                   onClear={clearShape}
+                   onClear={this.clearShapeAndLayers.bind(this)}
                    onSetColor={setShapeColor}
                    onVisibilityToggle={toggleShapeVisibility}
             /> :
