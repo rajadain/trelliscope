@@ -1,0 +1,172 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: #FAFAFA;
+    font-family: 'Helvetica Neue', arial, sans-serif;
+    font-weight: 400;
+    color: #444;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+main {
+    width: 100%;
+}
+
+#app {
+    height: 100%;
+}
+
+.mdl-layout__drawer-button {
+    > i.material-icons {
+        visibility: hidden;
+
+        &::after {
+            content: 'library_add';
+            visibility: visible;
+        }
+    }
+}
+
+#login {
+    justify-content: center;
+    height: calc(100vh - 64px);
+    background: url('/assets/shifaaz-shamoon-302656.jpg') center/cover;
+}
+
+#credential-card {
+    margin: 100px 20px;
+
+    .mdl-card__title-text {
+        color: #fff;
+        font-size: 300%;
+        letter-spacing: -2px;
+        text-shadow: 0 0 1px #000, 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .mdl-card__title {
+        height: 215px;
+        background: #1A237E;
+    }
+
+    .mdl-card__actions {
+        text-align: right;
+    }
+
+    .mdl-switch {
+        margin-bottom: 20px;
+    }
+
+    .custom-credentials {
+        transition: height 0.3s cubic-bezier(.4,0,.2,1);
+        overflow: hidden;
+        height: 134px;
+
+        &.closed {
+            height: 0;
+        }
+    }
+}
+
+#main {
+    background: #D1D1D1;
+
+    .controls {
+        position: absolute;
+        top: 16px; left: 16px;
+        overflow: scroll;
+        z-index: 20;
+        max-height: calc(100vh - 64px - 32px);
+    }
+}
+
+#map {
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    z-index: 10;
+}
+
+.mdl-layout__header {
+    background-color: #01579B;
+}
+
+.card {
+    min-height: 0;
+
+    &.shape {
+        background: #FFEE58;
+    }
+
+    &.layer {
+        background: #CE93D8;
+    }
+
+    .mdl-card__title-text {
+        font-size: 200%;
+        letter-spacing: -2px;
+    }
+
+    .mdl-card__actions {
+        text-align: right;
+    }
+
+    .mdl-card__menu {
+        top: 16px;
+        right: 8px;
+    }
+
+    .mdl-button {
+        min-width: 62px;
+    }
+
+    .drawer {
+        text-align: right;
+        transition: all 0.3s cubic-bezier(.4,0,.2,1);
+        padding: 0 8px;
+        max-height: 0;
+        opacity: 0;
+        width: 100%;
+
+        &.visible {
+            padding: 8px;
+            max-height: 54px;
+            opacity: 1;
+        }
+
+        i {
+            text-shadow: #000 0 2px 4px;
+
+            &.active {
+                text-shadow: none;
+            }
+        }
+    }
+}
+
+.layers-list {
+    margin: 8px 0;
+    display: inline-block;
+
+    > .card + .card {
+        margin: 8px 0;
+    }
+}
+
+.mdl-layout__drawer {
+    width: 360px;
+    transform: translateX(-360px);
+}
+
+.mdl-navigation__link .mdl-checkbox {
+    height: auto;
+
+    &.is-disabled .mdl-checkbox__label {
+        color: #424242;
+    }
+}
