@@ -25,7 +25,7 @@ class LayerEntry extends Component {
             removeQueryLayer,
         } = this.props;
 
-        const { awsAccessKeyId, awsSecretAccessKey, bucketName } = login;
+        const { awsAccessKeyId, awsSecretAccessKey, s3Path } = login;
         const { geojson } = shape;
 
         if (!geojson) {
@@ -38,7 +38,7 @@ class LayerEntry extends Component {
                 post(LAYERS_QUERY_URL, {
                     awsAccessKeyId,
                     awsSecretAccessKey,
-                    bucket: bucketName,
+                    s3Path,
                     layer: title,
                     shape: JSON.stringify(geojson),
                 })

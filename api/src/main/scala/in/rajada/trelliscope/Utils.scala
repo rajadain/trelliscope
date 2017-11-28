@@ -11,4 +11,12 @@ trait Utils {
     case p: Polygon => MultiPolygon(Seq(p))
     case _ => ???
   }
+
+  def toBucketPrefix(s3Path: String): (String, String) = {
+    val split = s3Path.split('/')
+    split.length match {
+      case 1 => (s3Path, "")
+      case _ => (split.head, s3Path.substring(split.head.length + 1))
+    }
+  }
 }

@@ -2,7 +2,7 @@ const initial = {
     login: {
         awsAccessKeyId: null,
         awsSecretAccessKey: null,
-        bucketName: null,
+        s3Path: null,
     },
     shape: {
         title: 'Shape',

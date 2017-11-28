@@ -17,7 +17,7 @@ const { protocol, hostname } = document.location;
 const LAYERS_LIST_URL = `${protocol}//${hostname}:7316/layers`;
 
 class Login extends Component {
-    onLogin({awsAccessKeyId, awsSecretAccessKey, bucketName}) {
+    onLogin({awsAccessKeyId, awsSecretAccessKey, s3Path}) {
         const {
             setCredentials,
             navigateTo,
@@ -31,10 +31,10 @@ class Login extends Component {
             .post(LAYERS_LIST_URL, {
                 awsAccessKeyId,
                 awsSecretAccessKey,
-                bucket: bucketName,
+                s3Path,
             })
             .then(({ data }) => {
-                setCredentials(awsAccessKeyId, awsSecretAccessKey, bucketName);
+                setCredentials(awsAccessKeyId, awsSecretAccessKey, s3Path);
                 finishFetchLayers(data);
                 navigateTo('/main/');
             })

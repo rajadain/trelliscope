@@ -12,9 +12,12 @@ class S3AttributeStore(val awsAccessKeyId: String, val awsSecretAccessKey: Strin
 
 object S3AttributeStore {
   def apply(awsAccessKeyId: String, awsSecretAccessKey: String, bucket: String): gtS3AttributeStore =
+    apply(awsAccessKeyId, awsSecretAccessKey, bucket, "")
+
+  def apply(awsAccessKeyId: String, awsSecretAccessKey: String, bucket: String, prefix: String): gtS3AttributeStore =
     if (awsAccessKeyId != "" && awsSecretAccessKey != "") {
-      new S3AttributeStore(awsAccessKeyId, awsSecretAccessKey, bucket, "")
+      new S3AttributeStore(awsAccessKeyId, awsSecretAccessKey, bucket, prefix)
     } else {
-      new gtS3AttributeStore(bucket, "")
+      new gtS3AttributeStore(bucket, prefix)
     }
 }

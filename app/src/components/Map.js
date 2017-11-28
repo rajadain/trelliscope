@@ -13,8 +13,8 @@ const { protocol, hostname } = document.location;
 const GEOTIFF_BASE = `${protocol}//${hostname}:7316/geotiff`;
 
 const onEachFeature = ({ properties }, tiles) => {
-    const { col, row, layer, bucket } = properties;
-    const url = `${GEOTIFF_BASE}/${bucket}/${layer}/${col}/${row}`;
+    const { col, row, layer, s3Path } = properties;
+    const url = `${GEOTIFF_BASE}/${encodeURIComponent(s3Path)}/${layer}/${col}/${row}`;
     const p = `<p><strong>${layer}</strong></p>`;
     const a = `<a href="${url}" rel="noopener noreferer" target="_blank">Download GeoTIFF</a>`;
     // const button = `

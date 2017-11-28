@@ -21,7 +21,7 @@ import spray.json._
 import com.typesafe.config.ConfigFactory
 
 case class ListLayersRequest (
-  bucket: String,
+  s3Path: String,
   awsAccessKeyId: String,
   awsSecretAccessKey: String
 )
@@ -29,7 +29,7 @@ case class ListLayersRequest (
 case class GetLayerRequest (
   shape: String, // GeoJSON
   layer: String, // LayerId Name
-  bucket: String,
+  s3Path: String,
   awsAccessKeyId: String,
   awsSecretAccessKey: String
 )
@@ -38,7 +38,7 @@ case class TileFeatureData (
   col: Int,
   row: Int,
   layer: String,
-  bucket: String
+  s3Path: String
 )
 
 object PostRequestProtocol extends DefaultJsonProtocol {
@@ -60,7 +60,8 @@ object WebServer extends HttpApp with App with Utils {
       pathEndOrSingleSlash {
         post {
           entity(as[ListLayersRequest]) { req =>
-            val store = S3AttributeStore(req.awsAccessKeyId, req.awsSecretAccessKey, req.bucket)
+            val (bucket, prefix) = toBucketPrefix(req.s3Path)
+            val store = S3AttributeStore(req.awsAccessKeyId, req.awsSecretAccessKey, bucket, prefix)
             val layers = store.layerIds
                               .filter { _.zoom == 0 }
                               .map { _.name }
@@ -74,7 +75,8 @@ object WebServer extends HttpApp with App with Utils {
       pathEndOrSingleSlash {
         post {
           entity(as[GetLayerRequest]) { req =>
-            val store = S3AttributeStore(req.awsAccessKeyId, req.awsSecretAccessKey, req.bucket)
+            val (bucket, prefix) = toBucketPrefix(req.s3Path)
+            val store = S3AttributeStore(req.awsAccessKeyId, req.awsSecretAccessKey, bucket, prefix)
             val layerId = LayerId(req.layer, 0)
             val reader = S3CollectionLayerReader(req.awsAccessKeyId, req.awsSecretAccessKey, store)
             val shape = toMultiPolygon(req.shape.parseJson)
@@ -93,7 +95,7 @@ object WebServer extends HttpApp with App with Utils {
 
             val tiles = keys.map(key => {
               val data = TileFeatureData(key.col, key.row,
-                                         req.layer, req.bucket)
+                                         req.layer, req.s3Path)
               val extent = meta.mapTransform.apply(key)
               val polygon = extent.toPolygon
                                   .densify(density)
@@ -109,9 +111,10 @@ object WebServer extends HttpApp with App with Utils {
         }
       }
     } ~
-    pathPrefix("geotiff" / Segment / Segment / IntNumber / IntNumber) { (bucket, layer, col, row) =>
+    pathPrefix("geotiff" / Segment / Segment / IntNumber / IntNumber) { (s3Path, layer, col, row) =>
       get {
-        val store = S3AttributeStore("", "", bucket)
+        val (bucket, prefix) = toBucketPrefix(s3Path)
+        val store = S3AttributeStore("", "", bucket, prefix)
         val layerId = LayerId(layer, 0)
         val reader = S3ValueReader[SpatialKey, Tile](store, layerId)
         val LayerAttributes(_, metadata, _, _) =
