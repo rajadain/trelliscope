@@ -28,6 +28,6 @@ then
         docker-compose \
             -f docker-compose.yml \
             run --rm --no-deps api \
-            ./sbt -ivy /opt/app/.ivy2 compile
+            ./sbt compile
     fi
 fi

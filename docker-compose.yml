@@ -7,8 +7,9 @@ services:
       - "7316:7316"
     volumes:
       - ~/.aws:/root/.aws
+      - ~/.ivy2:/root/.ivy2
       - ./api:/opt/app
-    command: ./sbt -ivy /opt/app/.ivy2 ~reStart
+    command: ./sbt ~reStart
   app:
     image: node:8.6.0-alpine
     working_dir: /opt/app
