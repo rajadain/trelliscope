@@ -31,6 +31,7 @@
     "node-sass": "^4.7.2",
     "preact": "^8.2.5",
     "preact-mdl": "^2.2.1",
+    "preact-progress": "^1.0.0",
     "preact-redux": "^2.0.2",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",

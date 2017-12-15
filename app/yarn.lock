@@ -5489,6 +5489,10 @@ preact-mdl@^2.2.1:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/preact-mdl/-/preact-mdl-2.2.2.tgz#86565ca0bc652b5825f64d715020f7a0123c1e3e"
 
+preact-progress@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/preact-progress/-/preact-progress-1.0.0.tgz#61903c33c0496370f5d66b2e40f05410fafab4e0"
+
 preact-redux@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/preact-redux/-/preact-redux-2.0.3.tgz#960a535c322643cd35998f33f0c2e67bc1e7eaab"

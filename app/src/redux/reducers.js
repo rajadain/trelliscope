@@ -1,4 +1,8 @@
 const initial = {
+    header: {
+        loading: false,
+        progress: 0,
+    },
     login: {
         awsAccessKeyId: null,
         awsSecretAccessKey: null,
@@ -24,6 +28,35 @@ const initial = {
         data: [],
     },
 };
+
+function header(state = initial.header, { type, payload }) {
+    switch(type) {
+        case 'START_QUERY_LAYER':
+        case 'START_FETCH_LAYERS':
+            return Object.assign({}, state, {
+                loading: true,
+                progress: 0,
+            });
+        case 'ERROR_QUERY_LAYER':
+        case 'FINISH_QUERY_LAYER':
+        case 'ERROR_FETCH_LAYERS':
+        case 'FINISH_FETCH_LAYERS':
+            return Object.assign({}, state, {
+                loading: false,
+                progress: 100,
+            });
+        case 'TICK_PROGRESS_BAR':
+            if (state.loading) {
+                return Object.assign({}, state, {
+                    progress: state.progress * payload.multiplier
+                });
+            }
+
+            return state;
+        default:
+            return state;
+    }
+}
 
 function login(state = initial.login, { type, payload }) {
     switch(type) {
@@ -171,4 +204,4 @@ function layerNames(state = initial.layerNames, { type, payload }) {
     }
 }
 
-export default { login, shape, layers, layerNames };
+export default { header, login, shape, layers, layerNames };

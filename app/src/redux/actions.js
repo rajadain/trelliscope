@@ -194,3 +194,32 @@ export function finishMapAdjustment() {
         payload: {},
     };
 }
+
+export function startProgressBar() {
+    return {
+        type: 'START_PROGRESS_BAR',
+        payload: {
+            loading: true,
+            progress: 0,
+        }
+    };
+}
+
+export function tickProgressBar(multiplier = 1.25) {
+    return {
+        type: 'TICK_PROGRESS_BAR',
+        payload: {
+            multiplier
+        }
+    };
+}
+
+export function finishProgressBar() {
+    return {
+        type: 'FINISH_PROGRESS_BAR',
+        payload: {
+            loading: false,
+            progress: 100,
+        }
+    };
+}
