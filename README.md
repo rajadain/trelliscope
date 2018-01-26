@@ -4,6 +4,20 @@ Trelliscope is a tool to inspect and verify geospatial RDD layers that have been
 
 ![demo](./docs/images/demo.gif "Trelliscope Demo")
 
+## Table of Contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+  * [Running the App](#running-the-app)
+  * [Specifying Credentials](#specifying-credentials)
+  * [Adding a Shape](#adding-a-shape)
+  * [Adding Layers](#adding-layers)
+  * [Checking for Alignment](#checking-for-alignment)
+  * [Downloading Tile GeoTIFF](#downloading-tile-geotiff)
+* [Development](#development)
+* [Contibuting](#contibuting)
+* [Acknowledgments](#acknowledgments)
+
 ## Installation
 
 Trelliscope requires [Docker](https://www.docker.com/). With that installed, clone this repository, and then run the `update` script to install dependencies, and `server` to run the app:
@@ -116,3 +130,4 @@ This project would not be possible without the many commercial and open source p
   * [iTerm 3](https://www.iterm2.com/version3.html)
   * [Carbon](https://carbon.now.sh/)
   * [Gifox](https://gifox.io/)
+  * [Github Markdown ToC](https://github.com/ekalinin/github-markdown-toc.go)
