@@ -7,11 +7,12 @@ export default class _Card extends Component {
     }
 
     downloadShape() {
-        const filename = `${this.props.params.title}.geojson`;
-        const geojson = encodeURIComponent(this.props.params.geojson);
+        const { title, geojson } = this.props.params;
+        const filename = `${title}.geojson`;
+        const contents = encodeURIComponent(JSON.stringify(geojson));
 
         const a = document.createElement('a');
-        a.setAttribute('href', `data:text/plain;charset=utf-8,${geojson}`);
+        a.setAttribute('href', `data:text/plain;charset=utf-8,${contents}`);
         a.setAttribute('download', filename);
         a.style.display = 'none';
 
