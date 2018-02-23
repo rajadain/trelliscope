@@ -21,6 +21,14 @@ import {
 import { bindActions } from '../../redux/utils';
 
 class Main extends Component {
+    componentDidMount() {
+        const { login: { s3Path }, history } = this.props;
+
+        if (s3Path === null) {
+            history.push('/login/');
+        }
+    }
+
     clearShapeAndLayers() {
         const { clearShape, clearLayer, layers } = this.props;
 
@@ -79,6 +87,7 @@ class Main extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    login: state.login,
     shape: state.shape,
     layers: state.layers,
 });

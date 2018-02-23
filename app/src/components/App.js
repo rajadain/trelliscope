@@ -26,12 +26,12 @@ export default class App extends Component {
                                 </Layout.Content>
                             </Layout>
                         )} />
-                        <Route path="/main/" render={() => (
+                        <Route path="/main/" render={({ history }) => (
                             <Layout fixed-header>
                                 <Header />
                                 <Drawer />
                                 <Layout.Content>
-                                    <Main />
+                                    <Main history={history} />
                                 </Layout.Content>
                             </Layout>
                         )} />
