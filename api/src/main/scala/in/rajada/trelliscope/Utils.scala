@@ -11,6 +11,7 @@ trait Utils {
     json.asJsObject.fields("type") match {
       case JsString("MultiPolygon") => MultiPolygonFormat.read(json)
       case JsString("Polygon") => MultiPolygon(Seq(PolygonFormat.read(json)))
+      case JsString("Feature") => toMultiPolygon(json.asJsObject.fields("geometry"))
       case JsString("FeatureCollection") => {
         val collection = json.toString.parseGeoJson[JsonFeatureCollection]
         val mps = collection.getAllMultiPolygons.unionGeometries.asMultiPolygon
