@@ -18,23 +18,14 @@ export default class App extends Component {
             <Provider store={store}>
                 <BrowserRouter>
                     <div id="app">
-                        <Route path="/login/" render={({ history }) => (
-                            <Layout fixed-header>
-                                <Header />
-                                <Layout.Content>
-                                    <Login history={history} />
-                                </Layout.Content>
-                            </Layout>
-                        )} />
-                        <Route path="/main/" render={({ history }) => (
-                            <Layout fixed-header>
-                                <Header />
-                                <Drawer />
-                                <Layout.Content>
-                                    <Main history={history} />
-                                </Layout.Content>
-                            </Layout>
-                        )} />
+                        <Layout fixed-header>
+                            <Header />
+                            <Route path="/main/" component={Drawer} />
+                            <Layout.Content>
+                                <Route path="/login/" component={Login} />
+                                <Route path="/main/" component={Main} />
+                            </Layout.Content>
+                        </Layout>
                         <Route exact path="/" render={() => (
                             <Redirect to="/login/" />
                         )} />
