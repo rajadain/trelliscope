@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { Layout } from 'preact-mdl';
 
-import { Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'preact-redux';
 
 import Header from './Header';
@@ -10,19 +10,19 @@ import Drawer from './Drawer';
 import Login from '../routes/login';
 import Main from '../routes/main';
 
-import { history, store } from '../redux/store';
+import store from '../redux/store';
 
 export default class App extends Component {
     render() {
         return (
             <Provider store={store}>
-                <Router history={history}>
+                <BrowserRouter>
                     <div id="app">
-                        <Route path="/login/" render={() => (
+                        <Route path="/login/" render={({ history }) => (
                             <Layout fixed-header>
                                 <Header />
                                 <Layout.Content>
-                                    <Login />
+                                    <Login history={history} />
                                 </Layout.Content>
                             </Layout>
                         )} />
@@ -39,7 +39,7 @@ export default class App extends Component {
                             <Redirect to="/login/" />
                         )} />
                     </div>
-                </Router>
+                </BrowserRouter>
             </Provider>
         );
     }

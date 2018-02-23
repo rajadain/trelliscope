@@ -6,7 +6,6 @@ import CredentialForm from '../../components/CredentialForm';
 
 import {
     setCredentials,
-    navigateTo,
     startFetchLayers,
     finishFetchLayers,
     errorFetchLayers,
@@ -20,10 +19,10 @@ class Login extends Component {
     onLogin({awsAccessKeyId, awsSecretAccessKey, s3Path}) {
         const {
             setCredentials,
-            navigateTo,
             startFetchLayers,
             finishFetchLayers,
             errorFetchLayers,
+            history,
         } = this.props;
 
         startFetchLayers();
@@ -36,7 +35,7 @@ class Login extends Component {
             .then(({ data }) => {
                 setCredentials(awsAccessKeyId, awsSecretAccessKey, s3Path);
                 finishFetchLayers(data);
-                navigateTo('/main/');
+                history.push('/main/');
             })
             .catch(errorFetchLayers);
     }
@@ -55,7 +54,6 @@ class Login extends Component {
 const mapStateToProps = (state) => ({ login: state.login });
 const mapDispatchToProps = bindActions({
     setCredentials,
-    navigateTo,
     startFetchLayers,
     finishFetchLayers,
     errorFetchLayers,
