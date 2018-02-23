@@ -22,7 +22,7 @@ export default class _Card extends Component {
     }
 
     render({ params, onClear, onSetColor, onVisibilityToggle, index = null,
-             icon, className, cardColors },
+             className, cardColors },
            { showDrawer }) {
         const style = {backgroundColor: params.color};
         const colorButtons = cardColors.map(c => {
@@ -43,7 +43,6 @@ export default class _Card extends Component {
                 <Card.Title>
                     <Card.TitleText>
                         {params.title}
-                        <Icon icon={icon} />
                     </Card.TitleText>
                 </Card.Title>
                 <Card.Actions>

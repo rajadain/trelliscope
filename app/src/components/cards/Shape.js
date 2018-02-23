@@ -15,7 +15,7 @@ export default class Shape extends Component {
             <Card params={params} onClear={onClear}
                   onSetColor={onSetColor}
                   onVisibilityToggle={onVisibilityToggle}
-                  icon="terrain" className="shape"
+                  className="shape"
                   cardColors={cardColors} />
         );
     }

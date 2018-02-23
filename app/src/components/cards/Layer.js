@@ -16,7 +16,7 @@ export default class Layer extends Component {
                   onSetColor={onSetColor}
                   onVisibilityToggle={onVisibilityToggle}
                   index={index}
-                  icon="" className="layer"
+                  className="layer"
                   cardColors={cardColors} />
         );
     }

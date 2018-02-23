@@ -33,7 +33,6 @@ export default class AddShape extends Component {
                 <Card.Title>
                     <Card.TitleText>
                         Shape
-                        <Icon icon="terrain" />
                     </Card.TitleText>
                 </Card.Title>
                 <Card.Menu>
