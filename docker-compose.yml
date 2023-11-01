@@ -11,7 +11,7 @@ services:
       - ./api:/opt/app
     command: ./sbt ~reStart
   app:
-    image: node:8.6.0-alpine
+    image: node:8
     working_dir: /opt/app
     ports:
       - "7315:7315"
